@@ -5,6 +5,9 @@
  */
 package filesystemsimulation;
 
+import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.ERROR_MESSAGE;
+
 /**
  *
  * @author adria
@@ -32,7 +35,7 @@ public class Window_Virtual_Disc_Creation extends javax.swing.JFrame {
         lbl_sector_size = new javax.swing.JLabel();
         spn_sec_size = new javax.swing.JSpinner();
         spn_sec_cant = new javax.swing.JSpinner();
-        btn_create_sector = new javax.swing.JButton();
+        btn_create_disc = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -40,10 +43,14 @@ public class Window_Virtual_Disc_Creation extends javax.swing.JFrame {
 
         lbl_sector_size.setText("Tamaño por sector:");
 
-        btn_create_sector.setText("Crear Sector");
-        btn_create_sector.addActionListener(new java.awt.event.ActionListener() {
+        spn_sec_size.setModel(new javax.swing.SpinnerNumberModel(4, 4, 1024, 1));
+
+        spn_sec_cant.setModel(new javax.swing.SpinnerNumberModel(1, 1, 1000, 1));
+
+        btn_create_disc.setText("Crear disco virtual");
+        btn_create_disc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_create_sectorActionPerformed(evt);
+                btn_create_discActionPerformed(evt);
             }
         });
 
@@ -54,7 +61,7 @@ public class Window_Virtual_Disc_Creation extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btn_create_sector, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_create_disc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(lbl_sector_size)
@@ -78,7 +85,7 @@ public class Window_Virtual_Disc_Creation extends javax.swing.JFrame {
                     .addComponent(lbl_sector_size)
                     .addComponent(spn_sec_size, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(btn_create_sector)
+                .addComponent(btn_create_disc)
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
@@ -102,13 +109,14 @@ public class Window_Virtual_Disc_Creation extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_create_sectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_create_sectorActionPerformed
+    private void btn_create_discActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_create_discActionPerformed
         // TODO add your handling code here:
         int sectorCant = Integer.parseInt(spn_sec_cant.getValue().toString());
         int sectorSize = Integer.parseInt(spn_sec_size.getValue().toString());
         System.out.println("sector cant es: " + sectorCant + " sector size es " + sectorSize);
-    }//GEN-LAST:event_btn_create_sectorActionPerformed
+    }//GEN-LAST:event_btn_create_discActionPerformed
 
+    
     /**
      * @param args the command line arguments
      */
@@ -145,7 +153,7 @@ public class Window_Virtual_Disc_Creation extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_create_sector;
+    private javax.swing.JButton btn_create_disc;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lbl_sect_cant;
     private javax.swing.JLabel lbl_sector_size;
