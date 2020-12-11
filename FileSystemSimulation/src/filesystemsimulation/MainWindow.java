@@ -1,5 +1,9 @@
 package filesystemsimulation;
 
+import java.util.List;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -14,6 +18,7 @@ public class MainWindow extends javax.swing.JFrame {
      * Creates new form NewJFrame
      */
     private FileSystemDirectory tree;
+    private FileSystemDirectory treeTemp;
     public MainWindow() {
         initComponents();
         tree = new FileSystemDirectory("root");
@@ -287,9 +292,54 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_ListDirectoryButtonActionPerformed
 
     private void MoveRouteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MoveRouteButtonActionPerformed
-        // TODO add your handling code here:
+        String newRoute = RouteTextField.getText();      
+        String[] route = newRoute.split("/");
+        if(route[0].equals("root") && route.length==1 && tree.getName().equals("root")){
+            JOptionPane.showMessageDialog(null, "You're already in " + tree.getPath());
+        }else{
+             List<String> list;  
+            list = new ArrayList<String>();
+            for(int i = 0; i< route.length; i++){
+            list.add(route[i]);
+            }
+            FileSystemDirectory tempTree = tree;
+            tree = moveUp(tree); //Voy a root
+            if(route[0].equals("root") && route.length==1){
+                JOptionPane.showMessageDialog(null, "Success in moving to " + tree.getPath());
+            }else{
+                
+                tree = moveDown(list.get(route.length-1),tree);
+                if(tree == null){
+                    tree = tempTree;
+                    JOptionPane.showMessageDialog(null, "Route not found");
+                }else{
+                    JOptionPane.showMessageDialog(null, "Success in moving to " + tree.getPath());
+                    RouteTextField.setText(tree.getPath());
+                    // root/universidad/operativos --> [root, universidad, operativos]
+                }
+            }         
+        }                
     }//GEN-LAST:event_MoveRouteButtonActionPerformed
-
+   
+    public FileSystemDirectory moveUp(FileSystemDirectory actual){
+        while(actual.getParent()!= null){
+            actual = (FileSystemDirectory) actual.getParent();
+        }
+        return actual;
+    }
+    
+    public FileSystemDirectory moveDown(String s, FileSystemDirectory actual){    
+        
+        for(FileSystemNode n:actual.getNodes()){
+            System.out.println(n.getName()+" "+s+" "+n.getName().equals(s));
+            if(n.getName().equals(s)){
+                return (FileSystemDirectory) n;                
+            }else{
+                moveDown(s, (FileSystemDirectory) n);
+            }                
+        }
+        return null;                
+    }
     /**
      * @param args the command line arguments
      */

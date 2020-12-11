@@ -27,19 +27,23 @@ public class FileSystemSimulation {
         System.out.println("Path del padre " + movie.getParent().getPath());
 
         FileSystemDirectory englishMovie = new FileSystemDirectory("english");
-
+        
         englishMovie.add(new FileSystemDirectory("IronFist.mp4"));
         englishMovie.add(new FileSystemDirectory("The Shawshank Redemption.mp4"));
         englishMovie.add(new FileSystemDirectory("ZotaPia.mp4"));
         FileSystemFile despicableMe = new FileSystemFile("DespicableMe.mp4");
         englishMovie.add(despicableMe);
         movie.add(englishMovie);
-
-        FileSystemDirectory banglaMovie = new FileSystemDirectory("Bangla");
-        banglaMovie.add(new FileSystemFile("The Clay Bird.mp4"));
-        banglaMovie.add(new FileSystemFile("Jibon Thekey Neya.mp4"));
-
-        movie.add(banglaMovie);
+        System.out.println("Soy english movie y mi padre es: "+ englishMovie.getParent().getName());
+        root = englishMovie;
+        System.out.println("Soy english movie y mi padre es: "+ root.getParent().getParent().getName());
+        System.out.println(root.getParent().getParent().getParent() ==null);
+//        movie.add(englishMovie);        
+//        FileSystemDirectory banglaMovie = new FileSystemDirectory("Bangla");
+//        banglaMovie.add(new FileSystemFile("The Clay Bird.mp4"));
+//        banglaMovie.add(new FileSystemFile("Jibon Thekey Neya.mp4"));
+//
+//        movie.add(banglaMovie);
 
         root.printTree();
 
