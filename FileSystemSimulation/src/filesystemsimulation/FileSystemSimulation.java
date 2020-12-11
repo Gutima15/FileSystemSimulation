@@ -24,6 +24,7 @@ public class FileSystemSimulation {
 
         FileSystemDirectory movie = new FileSystemDirectory("movie");
         root.add(movie);
+        System.out.println("Path del padre " + movie.getParent().getPath());
 
         FileSystemDirectory englishMovie = new FileSystemDirectory("english");
 

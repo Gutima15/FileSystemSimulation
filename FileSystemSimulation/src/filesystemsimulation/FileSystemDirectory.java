@@ -1,9 +1,10 @@
+package filesystemsimulation;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package filesystemsimulation;
 
 import java.util.Set;
 import java.util.TreeSet;
@@ -31,7 +32,6 @@ public class FileSystemDirectory extends FileSystemNode {
         return nodes;
     }
 
-    @Override
     public long getLength() {
         long length = 0;
         for (FileSystemNode node : nodes) {
@@ -47,7 +47,7 @@ public class FileSystemDirectory extends FileSystemNode {
         System.out.println(sb.toString());
     }
 
-    private void printDirectoryTree(FileSystemNode node, int indent, StringBuilder sb) {
+    public void printDirectoryTree(FileSystemNode node, int indent, StringBuilder sb) {
         sb.append(getIndentString(indent));
         sb.append("+--");
         sb.append(node.getName());

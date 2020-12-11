@@ -1,3 +1,5 @@
+package filesystemsimulation;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -8,12 +10,12 @@
  *
  * @author jorge
  */
-public class MoveWindow extends javax.swing.JFrame {
+public class CopyWindow extends javax.swing.JFrame {
 
     /**
-     * Creates new form MoveWindow
+     * Creates new form CopyWindow
      */
-    public MoveWindow() {
+    public CopyWindow() {
         initComponents();
     }
 
@@ -26,34 +28,22 @@ public class MoveWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        MovingLabel = new javax.swing.JLabel();
-        NameTextField = new javax.swing.JTextField();
         ToLabel = new javax.swing.JLabel();
         ToTextField = new javax.swing.JTextField();
-        RenameButton = new javax.swing.JButton();
+        MovingLabel = new javax.swing.JLabel();
         AcceptButton = new javax.swing.JButton();
         CancelButton = new javax.swing.JButton();
+        NameTextField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Move file or directory");
-
-        MovingLabel.setText("Moving:");
+        setTitle("Copy file");
+        setResizable(false);
 
         ToLabel.setText("To:");
 
-        RenameButton.setText("Rename");
-        RenameButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RenameButtonActionPerformed(evt);
-            }
-        });
+        MovingLabel.setText("Copying:");
 
         AcceptButton.setText("Accept");
-        AcceptButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AcceptButtonActionPerformed(evt);
-            }
-        });
 
         CancelButton.setText("Cancel");
         CancelButton.addActionListener(new java.awt.event.ActionListener() {
@@ -68,22 +58,20 @@ public class MoveWindow extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(CancelButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 116, Short.MAX_VALUE)
                         .addComponent(AcceptButton))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(ToLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ToTextField))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(MovingLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(NameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(NameTextField))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(ToLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(RenameButton)))
-                .addContainerGap(19, Short.MAX_VALUE))
+                        .addComponent(ToTextField)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -91,8 +79,7 @@ public class MoveWindow extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(MovingLabel)
-                    .addComponent(NameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(RenameButton))
+                    .addComponent(NameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ToLabel)
@@ -101,23 +88,16 @@ public class MoveWindow extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(AcceptButton)
                     .addComponent(CancelButton))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void RenameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RenameButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RenameButtonActionPerformed
 
     private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_CancelButtonActionPerformed
-
-    private void AcceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AcceptButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_AcceptButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -136,20 +116,20 @@ public class MoveWindow extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MoveWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CopyWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MoveWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CopyWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MoveWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CopyWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MoveWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CopyWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MoveWindow().setVisible(true);
+                new CopyWindow().setVisible(true);
             }
         });
     }
@@ -159,7 +139,6 @@ public class MoveWindow extends javax.swing.JFrame {
     private javax.swing.JButton CancelButton;
     private javax.swing.JLabel MovingLabel;
     private javax.swing.JTextField NameTextField;
-    private javax.swing.JButton RenameButton;
     private javax.swing.JLabel ToLabel;
     private javax.swing.JTextField ToTextField;
     // End of variables declaration//GEN-END:variables

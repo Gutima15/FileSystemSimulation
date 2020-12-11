@@ -1,3 +1,5 @@
+package filesystemsimulation;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -5,18 +7,27 @@
  */
 
 /**
- *
- * @author jorge
+ * @author Jorge & Badilla
  */
 public class MainWindow extends javax.swing.JFrame {
-
     /**
      * Creates new form NewJFrame
      */
+    private FileSystemDirectory tree;
     public MainWindow() {
         initComponents();
+        tree = new FileSystemDirectory("root");
+        TreeTextArea.setText("->" + tree.getPath());
+        RouteTextField.setText(tree.getPath());
     }
-
+    
+    public void fillTree(){        
+        int indent = 0;
+        StringBuilder sb = new StringBuilder();       
+        tree.printDirectoryTree(tree, indent, sb);
+        TreeTextArea.setText(sb.toString());
+    }
+       
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -67,7 +78,13 @@ public class MainWindow extends javax.swing.JFrame {
         });
 
         MoveRouteButton.setText("Move");
+        MoveRouteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MoveRouteButtonActionPerformed(evt);
+            }
+        });
 
+        TreeTextArea.setEditable(false);
         TreeTextArea.setColumns(20);
         TreeTextArea.setRows(5);
         TreeScrollPane.setViewportView(TreeTextArea);
@@ -84,6 +101,11 @@ public class MainWindow extends javax.swing.JFrame {
         });
 
         ListDirectoryButton.setText("List directories");
+        ListDirectoryButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ListDirectoryButtonActionPerformed(evt);
+            }
+        });
 
         FileLabel.setText("File operations");
 
@@ -136,6 +158,11 @@ public class MainWindow extends javax.swing.JFrame {
                             .addComponent(LastSeparator, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(FirstSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, 666, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(TreeLabel))
+                                .addGap(0, 27, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(FileLabel)
                                         .addComponent(TreeScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 547, Short.MAX_VALUE)
@@ -153,7 +180,17 @@ public class MainWindow extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(CopyButton))
                                     .addComponent(RouteLabel))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(UpSeparator)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(DirectoryLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(NewDirectoryButton, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
+                                                .addComponent(MoveRouteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                            .addComponent(BothLabel))
+                                        .addGap(0, 0, Short.MAX_VALUE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(LeftSaparator, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -162,25 +199,8 @@ public class MainWindow extends javax.swing.JFrame {
                                                 .addComponent(MoveBothButton, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(FindButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                            .addComponent(RemoveButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(UpSeparator)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                        .addComponent(DirectoryLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(NewDirectoryButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(ListDirectoryButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(MoveRouteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                                    .addComponent(BothLabel))
-                                                .addGap(0, 0, Short.MAX_VALUE))))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(FirstSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, 666, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(TreeLabel))
-                                .addGap(0, 27, Short.MAX_VALUE)))))
+                                            .addComponent(RemoveButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(ListDirectoryButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -203,33 +223,35 @@ public class MainWindow extends javax.swing.JFrame {
                         .addComponent(DirectoryLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(NewDirectoryButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(ListDirectoryButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(BothLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(UpSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(FileLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(NewFileButton)
-                            .addComponent(EditFileButton)
-                            .addComponent(LookButton)
-                            .addComponent(LoadButton)
-                            .addComponent(DownloadButton)
-                            .addComponent(CopyButton)))
-                    .addComponent(LeftSaparator, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(MoveBothButton)
-                            .addComponent(FindButton))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(RemoveButton)))
-                .addGap(18, 18, 18)
-                .addComponent(LastSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(FileLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(NewFileButton)
+                                    .addComponent(EditFileButton)
+                                    .addComponent(LookButton)
+                                    .addComponent(LoadButton)
+                                    .addComponent(DownloadButton)
+                                    .addComponent(CopyButton)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(MoveBothButton)
+                                    .addComponent(FindButton))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(RemoveButton)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ListDirectoryButton)
+                        .addGap(13, 13, 13)
+                        .addComponent(LastSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(LeftSaparator, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(CloseButton)
                 .addContainerGap())
@@ -244,16 +266,29 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_RouteTextFieldActionPerformed
 
     private void NewFileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewFileButtonActionPerformed
-        // TODO add your handling code here:
+        Window_File_Creation fileWindow = new Window_File_Creation(tree, this);
+        this.dispose();
+        fileWindow.setVisible(true);
     }//GEN-LAST:event_NewFileButtonActionPerformed
 
     private void NewDirectoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewDirectoryButtonActionPerformed
-        // TODO add your handling code here:
+        Window_Directory_Creation directoryWindow = new Window_Directory_Creation(tree, this);
+        this.dispose();
+        directoryWindow.setVisible(true);
     }//GEN-LAST:event_NewDirectoryButtonActionPerformed
 
     private void FindButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FindButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_FindButtonActionPerformed
+
+    private void ListDirectoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListDirectoryButtonActionPerformed
+        Window_Directory_List listWindow = new Window_Directory_List(tree, this);        
+        listWindow.setVisible(true);
+    }//GEN-LAST:event_ListDirectoryButtonActionPerformed
+
+    private void MoveRouteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MoveRouteButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MoveRouteButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -312,7 +347,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JButton NewFileButton;
     private javax.swing.JButton RemoveButton;
     private javax.swing.JLabel RouteLabel;
-    private javax.swing.JTextField RouteTextField;
+    public javax.swing.JTextField RouteTextField;
     private javax.swing.JLabel TreeLabel;
     private javax.swing.JScrollPane TreeScrollPane;
     private javax.swing.JTextArea TreeTextArea;

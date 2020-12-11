@@ -41,6 +41,13 @@
                           <Component id="LastSeparator" alignment="1" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="FirstSeparator" min="-2" pref="666" max="-2" attributes="0"/>
+                                  <Component id="TreeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="0" pref="27" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
                                       <Component id="FileLabel" min="-2" max="-2" attributes="0"/>
                                       <Component id="TreeScrollPane" alignment="0" pref="547" max="32767" attributes="0"/>
@@ -61,7 +68,20 @@
                                   </Group>
                                   <Component id="RouteLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="UpSeparator" max="32767" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="DirectoryLabel" max="32767" attributes="0"/>
+                                              <Component id="NewDirectoryButton" pref="101" max="32767" attributes="0"/>
+                                              <Component id="MoveRouteButton" alignment="0" max="32767" attributes="0"/>
+                                          </Group>
+                                          <Component id="BothLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  </Group>
                                   <Group type="102" attributes="0">
                                       <Component id="LeftSaparator" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
@@ -72,34 +92,10 @@
                                               <Component id="FindButton" max="32767" attributes="0"/>
                                           </Group>
                                           <Component id="RemoveButton" max="32767" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <Group type="102" attributes="0">
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="UpSeparator" max="32767" attributes="0"/>
-                                          <Group type="102" attributes="0">
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                      <Component id="DirectoryLabel" max="32767" attributes="0"/>
-                                                      <Component id="NewDirectoryButton" max="32767" attributes="0"/>
-                                                      <Component id="ListDirectoryButton" alignment="0" max="32767" attributes="0"/>
-                                                      <Component id="MoveRouteButton" alignment="0" max="32767" attributes="0"/>
-                                                  </Group>
-                                                  <Component id="BothLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                          </Group>
+                                          <Component id="ListDirectoryButton" alignment="0" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="FirstSeparator" min="-2" pref="666" max="-2" attributes="0"/>
-                                  <Component id="TreeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="0" pref="27" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -129,8 +125,6 @@
                       <Component id="DirectoryLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="NewDirectoryButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="ListDirectoryButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="BothLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -138,31 +132,37 @@
                   </Group>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="FileLabel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="NewFileButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="EditFileButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="LookButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="LoadButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="DownloadButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="CopyButton" alignment="3" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="FileLabel" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="NewFileButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="EditFileButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="LookButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="LoadButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="DownloadButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="CopyButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="MoveBothButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="FindButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                              <Component id="RemoveButton" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="ListDirectoryButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
+                      <Component id="LastSeparator" min="-2" pref="2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="LeftSaparator" min="-2" pref="52" max="-2" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="MoveBothButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="FindButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="RemoveButton" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="LeftSaparator" min="-2" pref="83" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="LastSeparator" min="-2" pref="10" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="CloseButton" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
@@ -180,11 +180,17 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="RouteTextFieldActionPerformed"/>
       </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JButton" name="MoveRouteButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Move"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MoveRouteButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JSeparator" name="FirstSeparator">
     </Component>
@@ -197,6 +203,7 @@
       <SubComponents>
         <Component class="javax.swing.JTextArea" name="TreeTextArea">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="columns" type="int" value="20"/>
             <Property name="rows" type="int" value="5"/>
           </Properties>
@@ -225,6 +232,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="List directories"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ListDirectoryButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="FileLabel">
       <Properties>

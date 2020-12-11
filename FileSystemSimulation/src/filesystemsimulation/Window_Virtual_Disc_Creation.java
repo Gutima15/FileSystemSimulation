@@ -7,6 +7,12 @@ package filesystemsimulation;
 
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -39,6 +45,7 @@ public class Window_Virtual_Disc_Creation extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Create virtual disc");
+        setResizable(false);
 
         lbl_sect_cant.setText("Sector quantity:");
 
@@ -72,7 +79,7 @@ public class Window_Virtual_Disc_Creation extends javax.swing.JFrame {
                             .addComponent(lbl_sect_cant)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(spn_sec_cant, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -87,7 +94,7 @@ public class Window_Virtual_Disc_Creation extends javax.swing.JFrame {
                     .addComponent(spn_sec_size, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btn_create_disc)
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -97,7 +104,7 @@ public class Window_Virtual_Disc_Creation extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -108,13 +115,42 @@ public class Window_Virtual_Disc_Creation extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_create_discActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_create_discActionPerformed
         // TODO add your handling code here:
         int sectorCant = Integer.parseInt(spn_sec_cant.getValue().toString());
-        int sectorSize = Integer.parseInt(spn_sec_size.getValue().toString());
-        System.out.println("sector cant es: " + sectorCant + " sector size es " + sectorSize);
+        int sectorSize = Integer.parseInt(spn_sec_size.getValue().toString());        
+        String route = "./disc.txt";
+        String content = "";
+        for(int i = 0; i<sectorCant; i++){
+            for(int j = 0; j<sectorSize; j++){
+                content+="_";
+            }
+            content+="\n";
+        }
+        System.out.println(content+"\n");
+        File file = new File(route);
+        if(!file.exists()){
+            try {
+                file.createNewFile();
+            } catch (IOException ex) {
+                Logger.getLogger(Window_Virtual_Disc_Creation.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        try {
+            FileWriter fw = new FileWriter(file);
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(content);
+            bw.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Window_Virtual_Disc_Creation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        MainWindow ventanaPrincipal = new MainWindow();
+        this.dispose();
+        ventanaPrincipal.setVisible(true);
+        
     }//GEN-LAST:event_btn_create_discActionPerformed
 
     
