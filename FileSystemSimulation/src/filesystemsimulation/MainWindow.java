@@ -147,6 +147,11 @@ public class MainWindow extends javax.swing.JFrame {
         RemoveButton.setText("Remove");
 
         CloseButton.setText("Close");
+        CloseButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CloseButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -297,20 +302,19 @@ public class MainWindow extends javax.swing.JFrame {
         if(route[0].equals("root") && route.length==1 && tree.getName().equals("root")){
             JOptionPane.showMessageDialog(null, "You're already in " + tree.getPath());
         }else{
-             List<String> list;  
+            List<String> list;  
             list = new ArrayList<String>();
             for(int i = 0; i< route.length; i++){
-            list.add(route[i]);
+                list.add(route[i]);
             }
             FileSystemDirectory tempTree = tree;
             tree = moveUp(tree); //Voy a root
             if(route[0].equals("root") && route.length==1){
                 JOptionPane.showMessageDialog(null, "Success in moving to " + tree.getPath());
-            }else{
-                
-                tree = moveDown(list.get(route.length-1),tree);
+            }else{                
+                tree = moveDown(list.get(list.size()-1),tree);
                 if(tree == null){
-                    tree = tempTree;
+                    //tree = tempTree;
                     JOptionPane.showMessageDialog(null, "Route not found");
                 }else{
                     JOptionPane.showMessageDialog(null, "Success in moving to " + tree.getPath());
@@ -320,6 +324,10 @@ public class MainWindow extends javax.swing.JFrame {
             }         
         }                
     }//GEN-LAST:event_MoveRouteButtonActionPerformed
+
+    private void CloseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseButtonActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_CloseButtonActionPerformed
    
     public FileSystemDirectory moveUp(FileSystemDirectory actual){
         while(actual.getParent()!= null){
@@ -328,17 +336,20 @@ public class MainWindow extends javax.swing.JFrame {
         return actual;
     }
     
-    public FileSystemDirectory moveDown(String s, FileSystemDirectory actual){    
-        
+    public FileSystemDirectory moveDown(String s, FileSystemDirectory actual){ 
+        //FileSystemDirectory result = null;
         for(FileSystemNode n:actual.getNodes()){
             System.out.println(n.getName()+" "+s+" "+n.getName().equals(s));
             if(n.getName().equals(s)){
-                return (FileSystemDirectory) n;                
+                actual = (FileSystemDirectory) n;
+                break;
             }else{
-                moveDown(s, (FileSystemDirectory) n);
+                if(n != null){
+                    actual = moveDown(s, (FileSystemDirectory) n);                
+                }                
             }                
         }
-        return null;                
+        return actual;                
     }
     /**
      * @param args the command line arguments
