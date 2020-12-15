@@ -313,16 +313,19 @@ public class MainWindow extends javax.swing.JFrame {
             tree = moveUp(tree); //Voy a root
             if(route[0].equals("root") && route.length==1){
                 JOptionPane.showMessageDialog(null, "Success in moving to " + tree.getPath());
-            }else{                      
-                //list.remove(0);
-                tree = moveDown(list.get(list.indexOf(list.size()-1)),tree);
+            }else{      
+                String lastPathDir = list.get(list.size()-1);
+                list.remove(0);
+                tree = moveDown(list,tree);
                 if(tree == null){
                     tree = tempTree;
                     JOptionPane.showMessageDialog(null, "Route not found");
                 }else{
-                    JOptionPane.showMessageDialog(null, "Success in moving to " + tree.getPath());                    
-                    // root/universidad/operativos --> [root, universidad, operativos]
-                    // [root, universidad, operativos], [root, home, operativos]
+                    if(list.isEmpty())                    {
+                        JOptionPane.showMessageDialog(null, "Success in moving to " + tree.getPath());                        
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Path not found. Moving to the last valid path: " + tree.getPath());                        
+                    }
                 }                
             }
             RouteTextField.setText(tree.getPath());
@@ -341,7 +344,8 @@ public class MainWindow extends javax.swing.JFrame {
         return actual;
     }
       
-    public FileSystemDirectory moveDown (List<String> list, FileSystemDirectory actual){      
+    public FileSystemDirectory moveDown (List<String> list, FileSystemDirectory actual){  
+         // [root, badilla]
         if (list.isEmpty()){
             return actual;
         }else{
@@ -352,10 +356,13 @@ public class MainWindow extends javax.swing.JFrame {
                     list.remove(0);
                     moveDown(list, actual);
                     break;
-                }              
+                }else{
+                    actual = null;
+                }                     
             }
         }
-        return null;
+        return actual;
+        
     }
     
     

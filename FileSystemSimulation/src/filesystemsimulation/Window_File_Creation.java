@@ -5,6 +5,14 @@
  */
 package filesystemsimulation;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
 
@@ -128,22 +136,81 @@ public class Window_File_Creation extends javax.swing.JFrame {
 
     private void btn_create_fileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_create_fileActionPerformed
         // TODO add your handling code here:
-        validateData();
+        validateData();      
         //data validada        
+        File file = new File("./disc.txt");
+        if(!file.exists()){
+            try {
+                file.createNewFile();
+            } catch (IOException ex) {
+                Logger.getLogger(Window_Virtual_Disc_Creation.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }        
+        System.out.println("archivo existente");
+        try {
+            
+            FileReader fr = new FileReader(file);
+            BufferedReader br = new BufferedReader(fr);
+            String oldLine = "";
+            String linea;
+            int lineaLen=1;
+            while((linea=br.readLine())!=null){
+                oldLine.concat(linea);
+                lineaLen=linea.length();
+            }
+            //terminé de leer           
+            //modifico el string/disco
+            String contenido = txa_file_content.getText();
+            double lineasNecesarias = Math.ceil(contenido.length()/lineaLen); //cantidad de líneas vacías que necesita el archivo
+            String var = "0123456789012345\n0123456789012345\n________________\n0_______________\n0_______________\n________________\n________________\n";
+            int indexOfFirstEmpty = getValidEmpty(var,(int)lineasNecesarias, lineaLen);
+            if(indexOfFirstEmpty == -1){
+                JOptionPane.showMessageDialog(this, "There is no free space on disc", "Error",  ERROR_MESSAGE);
+            }
+            //_______
+            //_______
+            //escribo el disco
+//            FileWriter fw = new FileWriter(file);
+//            BufferedWriter bw = new BufferedWriter(fw);
+//            bw.write(content);
+              br.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Window_Virtual_Disc_Creation.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btn_create_fileActionPerformed
-
+    
+    public int getValidEmpty(String disc, int lineasNecesaria, int largoLinea){
+        int emptyLines=0;
+        int index=-1;
+        for(int i = 0; i< disc.length()&& emptyLines<lineasNecesaria ; i+=largoLinea){
+            char firstCharLine =disc.charAt(i);
+            if(emptyLines==0){
+                index = i;
+            }
+            if(firstCharLine=='_'){
+                emptyLines++;
+            }else{
+                emptyLines=0;
+            }
+        }
+        if(emptyLines < lineasNecesaria){
+            index = -1;
+        }
+        return index;
+    }
+   
     private void validateData(){
       String strName = txf_file_name.getText();
       String strExt = txf_file_extension.getText();
       String data = txa_file_content.getText();
       if(strName.equals("")){
-          JOptionPane.showMessageDialog(this, "El nombre no puede ser vacío", "Error",  ERROR_MESSAGE);
+          JOptionPane.showMessageDialog(this, "Name can not be null", "Error",  ERROR_MESSAGE);
       }  
       if(strExt.equals("")){
-          JOptionPane.showMessageDialog(this, "La extensión no puede ser vacía", "Error",  ERROR_MESSAGE);
+          JOptionPane.showMessageDialog(this, "Extention can not be null", "Error",  ERROR_MESSAGE);
       }
       if(data.equals("")){
-          JOptionPane.showMessageDialog(this, "El contenido no puede ser vacío", "Error",  ERROR_MESSAGE);
+          JOptionPane.showMessageDialog(this, "Content can not be null", "Error",  ERROR_MESSAGE);
       }
     }
 
