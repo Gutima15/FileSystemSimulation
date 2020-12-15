@@ -36,8 +36,8 @@ public class FileSystemSimulation {
         movie.add(englishMovie);
         System.out.println("Soy english movie y mi padre es: "+ englishMovie.getParent().getName());
         root = englishMovie;
-        System.out.println("Soy english movie y mi padre es: "+ root.getParent().getParent().getName());
-        System.out.println(root.getParent().getParent().getParent() ==null);
+        System.out.println("Soy el path de english movie: "+ root.getPath());
+        
 //        movie.add(englishMovie);        
 //        FileSystemDirectory banglaMovie = new FileSystemDirectory("Bangla");
 //        banglaMovie.add(new FileSystemFile("The Clay Bird.mp4"));

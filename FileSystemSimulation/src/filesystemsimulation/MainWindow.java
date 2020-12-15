@@ -26,11 +26,14 @@ public class MainWindow extends javax.swing.JFrame {
         RouteTextField.setText(tree.getPath());
     }
     
-    public void fillTree(){        
+    public void fillTree(FileSystemDirectory treeToPrint){        
         int indent = 0;
+        FileSystemDirectory tempTree = treeToPrint;
+        tempTree = moveUp(tempTree);
         StringBuilder sb = new StringBuilder();       
-        tree.printDirectoryTree(tree, indent, sb);
-        TreeTextArea.setText(sb.toString());
+        tempTree.printDirectoryTree(tempTree, indent, sb);
+        String finalResult = sb.toString().replace( treeToPrint.getName()+"/" , treeToPrint.getName()+ " <-- You are here" );
+        TreeTextArea.setText(finalResult);
     }
        
     /**
@@ -70,7 +73,6 @@ public class MainWindow extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("File system");
-        setMaximumSize(new java.awt.Dimension(600, 600));
         setName("MainWindow"); // NOI18N
         setResizable(false);
 
@@ -280,7 +282,7 @@ public class MainWindow extends javax.swing.JFrame {
         this.dispose();
         fileWindow.setVisible(true);
     }//GEN-LAST:event_NewFileButtonActionPerformed
-
+//NEW DIRECTORY LOGIC
     private void NewDirectoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewDirectoryButtonActionPerformed
         Window_Directory_Creation directoryWindow = new Window_Directory_Creation(tree, this);
         this.dispose();
@@ -295,7 +297,7 @@ public class MainWindow extends javax.swing.JFrame {
         Window_Directory_List listWindow = new Window_Directory_List(tree, this);        
         listWindow.setVisible(true);
     }//GEN-LAST:event_ListDirectoryButtonActionPerformed
-
+//MOVE BUTTON LOGIC
     private void MoveRouteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MoveRouteButtonActionPerformed
         String newRoute = RouteTextField.getText();      
         String[] route = newRoute.split("/");
@@ -314,15 +316,16 @@ public class MainWindow extends javax.swing.JFrame {
             }else{                
                 tree = moveDown(list.get(list.size()-1),tree);
                 if(tree == null){
-                    //tree = tempTree;
+                    tree = tempTree;
                     JOptionPane.showMessageDialog(null, "Route not found");
                 }else{
-                    JOptionPane.showMessageDialog(null, "Success in moving to " + tree.getPath());
-                    RouteTextField.setText(tree.getPath());
+                    JOptionPane.showMessageDialog(null, "Success in moving to " + tree.getPath());                    
                     // root/universidad/operativos --> [root, universidad, operativos]
-                }
-            }         
-        }                
+                }                
+            }
+            RouteTextField.setText(tree.getPath());
+            fillTree(tree);
+        }             
     }//GEN-LAST:event_MoveRouteButtonActionPerformed
 
     private void CloseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseButtonActionPerformed
@@ -344,9 +347,10 @@ public class MainWindow extends javax.swing.JFrame {
                 actual = (FileSystemDirectory) n;
                 break;
             }else{
-                if(n != null){
-                    actual = moveDown(s, (FileSystemDirectory) n);                
-                }                
+                if(n.getName() == null){
+                    return null;
+                }
+                actual = moveDown(s, (FileSystemDirectory) n);                
             }                
         }
         return actual;                

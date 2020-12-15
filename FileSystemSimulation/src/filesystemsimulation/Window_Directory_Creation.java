@@ -100,7 +100,7 @@ public class Window_Directory_Creation extends javax.swing.JFrame {
         FileSystemDirectory dir = new FileSystemDirectory(dirName);
         root.add(dir);        
         parent.setVisible(true);
-        parent.fillTree();
+        parent.fillTree(root);
         parent.RouteTextField.setText(root.getPath());
         this.dispose();
     }//GEN-LAST:event_btn_create_directoryActionPerformed
