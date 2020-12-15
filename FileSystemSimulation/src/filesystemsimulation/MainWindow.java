@@ -313,14 +313,16 @@ public class MainWindow extends javax.swing.JFrame {
             tree = moveUp(tree); //Voy a root
             if(route[0].equals("root") && route.length==1){
                 JOptionPane.showMessageDialog(null, "Success in moving to " + tree.getPath());
-            }else{                
-                tree = moveDown(list.get(list.size()-1),tree);
+            }else{                      
+                //list.remove(0);
+                tree = moveDown(list.get(list.indexOf(list.size()-1)),tree);
                 if(tree == null){
                     tree = tempTree;
                     JOptionPane.showMessageDialog(null, "Route not found");
                 }else{
                     JOptionPane.showMessageDialog(null, "Success in moving to " + tree.getPath());                    
                     // root/universidad/operativos --> [root, universidad, operativos]
+                    // [root, universidad, operativos], [root, home, operativos]
                 }                
             }
             RouteTextField.setText(tree.getPath());
@@ -338,23 +340,25 @@ public class MainWindow extends javax.swing.JFrame {
         }
         return actual;
     }
-    
-    public FileSystemDirectory moveDown(String s, FileSystemDirectory actual){ 
-        //FileSystemDirectory result = null;
-        for(FileSystemNode n:actual.getNodes()){
-            System.out.println(n.getName()+" "+s+" "+n.getName().equals(s));
-            if(n.getName().equals(s)){
-                actual = (FileSystemDirectory) n;
-                break;
-            }else{
-                if(n.getName() == null){
-                    return null;
-                }
-                actual = moveDown(s, (FileSystemDirectory) n);                
-            }                
+      
+    public FileSystemDirectory moveDown (List<String> list, FileSystemDirectory actual){      
+        if (list.isEmpty()){
+            return actual;
+        }else{
+            for(FileSystemNode n:actual.getNodes()){
+                System.out.println(n.getName()+" "+list.get(0)+" "+n.getName().equals(list.get(0)));
+                if(n.getName().equals(list.get(0))){
+                    actual = (FileSystemDirectory) n;
+                    list.remove(0);
+                    moveDown(list, actual);
+                    break;
+                }              
+            }
         }
-        return actual;                
+        return null;
     }
+    
+    
     /**
      * @param args the command line arguments
      */
