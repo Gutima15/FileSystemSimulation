@@ -14,9 +14,7 @@ import javax.swing.JOptionPane;
  * @author Jorge & Badilla
  */
 public class MainWindow extends javax.swing.JFrame {
-    /**
-     * Creates new form NewJFrame
-     */
+    Utilities ut = new Utilities();
     private FileSystemDirectory tree;
     private FileSystemDirectory treeTemp;
     public MainWindow() {
@@ -29,7 +27,7 @@ public class MainWindow extends javax.swing.JFrame {
     public void fillTree(FileSystemDirectory treeToPrint){        
         int indent = 0;
         FileSystemDirectory tempTree = treeToPrint;
-        tempTree = moveUp(tempTree);
+        tempTree = ut.moveUp(tempTree);
         StringBuilder sb = new StringBuilder();       
         tempTree.printDirectoryTree(tempTree, indent, sb);
         String finalResult = sb.toString().replace( treeToPrint.getName()+"/" , treeToPrint.getName()+ " <-- You are here" );
@@ -124,6 +122,11 @@ public class MainWindow extends javax.swing.JFrame {
         });
 
         EditFileButton.setText("Edit file");
+        EditFileButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EditFileButtonActionPerformed(evt);
+            }
+        });
 
         LookButton.setText("Look");
 
@@ -310,7 +313,7 @@ public class MainWindow extends javax.swing.JFrame {
                 list.add(route[i]);
             }
             FileSystemDirectory tempTree = tree;
-            tree = moveUp(tree); //Voy a root
+            tree = ut.moveUp(tree); //Voy a root
             if(route[0].equals("root") && route.length==1){
                 JOptionPane.showMessageDialog(null, "Success in moving to " + tree.getPath());
             }else{      
@@ -336,13 +339,13 @@ public class MainWindow extends javax.swing.JFrame {
     private void CloseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseButtonActionPerformed
         this.dispose();
     }//GEN-LAST:event_CloseButtonActionPerformed
+
+    private void EditFileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditFileButtonActionPerformed
+        String ruta = RouteTextField.getText();
+        Window_File_Editor editWindow = new Window_File_Editor(tree, this, ruta);
+    }//GEN-LAST:event_EditFileButtonActionPerformed
    
-    public FileSystemDirectory moveUp(FileSystemDirectory actual){
-        while(actual.getParent()!= null){
-            actual = (FileSystemDirectory) actual.getParent();
-        }
-        return actual;
-    }
+    
       
     public FileSystemDirectory moveDown (List<String> list, FileSystemDirectory actual){  
          // [root, badilla]

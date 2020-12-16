@@ -12,7 +12,7 @@ package filesystemsimulation;
  * @Updated 8/12/2020
  */
 public class FileSystemSimulation {
-
+    Utilities ut = new Utilities();
     /**
      * @param args the command line arguments
      */
@@ -40,7 +40,7 @@ public class FileSystemSimulation {
         FileSystemDirectory banglaMovie = new FileSystemDirectory("Bangla");
         banglaMovie.add(new FileSystemFile("The Clay Bird.mp4"));
         banglaMovie.add(new FileSystemFile("Jibon Thekey Neya.mp4"));
-
+        
         movie.add(banglaMovie);
 
         root.printTree();

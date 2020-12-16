@@ -54,6 +54,23 @@ public class Utilities {
         return memory;
     }
     
+    public String memoryToString(String memory, List<Integer> fillIndices, int lineLenght ){
+        String result = "";
+        for(int i = 0 ; i<fillIndices.size(); i++){              
+            String middlePart = memory.substring(fillIndices.get(i) , fillIndices.get(i)+lineLenght-1);            
+            result = result.concat(middlePart);            
+        }
+        return result;
+    }
+    
+    public FileSystemDirectory moveUp(FileSystemDirectory actual){
+        while(actual.getParent()!= null){
+            actual = (FileSystemDirectory) actual.getParent();
+        }
+        return actual;
+    }
+        
+    
     public int lineLenght(){
          File file = new File("./disc.txt");
          int lineaLen = -1;
