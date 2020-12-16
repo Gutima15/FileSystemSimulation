@@ -6,6 +6,7 @@
 package filesystemsimulation;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @authors Jorge Gutiérrez, Luis Adrián Badilla
@@ -19,12 +20,17 @@ public abstract class FileSystemNode implements Comparable<FileSystemNode> {
     private LocalDateTime created;
     private LocalDateTime lastUpdated;
     private LocalDateTime lastAccessed;
+    private List<Integer> listOfInicialIndices;
 
     public FileSystemNode(String name) {
         this.name = name;
         this.created = LocalDateTime.now();
         this.lastUpdated = LocalDateTime.now();
         this.lastAccessed = LocalDateTime.now();
+    }
+    
+    public void setListOfIndices(List<Integer> indices){
+        listOfInicialIndices = indices;
     }
 
     public boolean isDirectory() {

@@ -34,6 +34,7 @@ public class Window_Directory_Creation extends javax.swing.JFrame {
         lbl_directory_name = new javax.swing.JLabel();
         txf_directory_name = new javax.swing.JTextField();
         btn_create_directory = new javax.swing.JButton();
+        CancelButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Create new directory");
@@ -48,14 +49,25 @@ public class Window_Directory_Creation extends javax.swing.JFrame {
             }
         });
 
+        CancelButton.setText("Cancel");
+        CancelButton.setToolTipText("");
+        CancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CancelButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btn_create_directory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(CancelButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_create_directory))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lbl_directory_name)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -70,7 +82,9 @@ public class Window_Directory_Creation extends javax.swing.JFrame {
                     .addComponent(lbl_directory_name)
                     .addComponent(txf_directory_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btn_create_directory)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_create_directory)
+                    .addComponent(CancelButton))
                 .addGap(10, 10, 10))
         );
 
@@ -105,10 +119,17 @@ public class Window_Directory_Creation extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btn_create_directoryActionPerformed
 
+    private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
+        // TODO add your handling code here:
+        parent.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_CancelButtonActionPerformed
+
   
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton CancelButton;
     private javax.swing.JButton btn_create_directory;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lbl_directory_name;

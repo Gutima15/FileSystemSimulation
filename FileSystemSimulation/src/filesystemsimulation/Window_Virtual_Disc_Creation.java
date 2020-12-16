@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  * @author adria
  */
 public class Window_Virtual_Disc_Creation extends javax.swing.JFrame {
-
+    Utilities ut = new Utilities();
     /**
      * Creates new form Window_Virtual_Disc_Creation
      */
@@ -121,8 +121,7 @@ public class Window_Virtual_Disc_Creation extends javax.swing.JFrame {
     private void btn_create_discActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_create_discActionPerformed
         // TODO add your handling code here:
         int sectorCant = Integer.parseInt(spn_sec_cant.getValue().toString());
-        int sectorSize = Integer.parseInt(spn_sec_size.getValue().toString());        
-        String route = "./disc.txt";
+        int sectorSize = Integer.parseInt(spn_sec_size.getValue().toString());               
         String content = "";
         for(int i = 0; i<sectorCant; i++){
             for(int j = 0; j<sectorSize; j++){
@@ -130,23 +129,8 @@ public class Window_Virtual_Disc_Creation extends javax.swing.JFrame {
             }
             content+="\n";
         }
-        System.out.println(content+"\n");
-        File file = new File(route);
-        if(!file.exists()){
-            try {
-                file.createNewFile();
-            } catch (IOException ex) {
-                Logger.getLogger(Window_Virtual_Disc_Creation.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        try {
-            FileWriter fw = new FileWriter(file);
-            BufferedWriter bw = new BufferedWriter(fw);
-            bw.write(content);
-            bw.close();
-        } catch (IOException ex) {
-            Logger.getLogger(Window_Virtual_Disc_Creation.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        //Create the empty file
+        ut.WriteDisc(content);
         MainWindow ventanaPrincipal = new MainWindow();
         this.dispose();
         ventanaPrincipal.setVisible(true);

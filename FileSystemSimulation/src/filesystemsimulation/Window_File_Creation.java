@@ -11,10 +11,12 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
+import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
 
 /**
  *
@@ -23,6 +25,7 @@ import static javax.swing.JOptionPane.ERROR_MESSAGE;
 public class Window_File_Creation extends javax.swing.JFrame {
     FileSystemDirectory root;
     MainWindow parent;
+    Utilities ut = new Utilities();
     /**
      * Creates new form Window_File_Creation
      */
@@ -50,7 +53,8 @@ public class Window_File_Creation extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         txa_file_content = new javax.swing.JTextArea();
         lbl_file_content = new javax.swing.JLabel();
-        btn_create_file = new javax.swing.JButton();
+        CancelButton = new javax.swing.JButton();
+        CreateFileButton = new javax.swing.JButton();
 
         jButton1.setText("jButton1");
 
@@ -68,10 +72,18 @@ public class Window_File_Creation extends javax.swing.JFrame {
 
         lbl_file_content.setText("Content:");
 
-        btn_create_file.setText("Create file");
-        btn_create_file.addActionListener(new java.awt.event.ActionListener() {
+        CancelButton.setText("Cancel");
+        CancelButton.setActionCommand("Cancel");
+        CancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_create_fileActionPerformed(evt);
+                CancelButtonActionPerformed(evt);
+            }
+        });
+
+        CreateFileButton.setText("Create file");
+        CreateFileButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CreateFileButtonActionPerformed(evt);
             }
         });
 
@@ -80,19 +92,26 @@ public class Window_File_Creation extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lbl_file_content, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(lbl_file_name, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txf_file_name, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lbl_file_extension, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txf_file_extension, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1)
-                    .addComponent(btn_create_file, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(10, 10, 10)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lbl_file_content, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(lbl_file_name, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txf_file_name, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lbl_file_extension, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txf_file_extension, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(CancelButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(CreateFileButton)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -108,9 +127,13 @@ public class Window_File_Creation extends javax.swing.JFrame {
                 .addComponent(lbl_file_content)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btn_create_file)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(CreateFileButton)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(CancelButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -134,89 +157,64 @@ public class Window_File_Creation extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_create_fileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_create_fileActionPerformed
+    private void CreateFileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateFileButtonActionPerformed
         // TODO add your handling code here:
-        validateData();      
-        //data validada        
-        File file = new File("./disc.txt");
-        if(!file.exists()){
-            try {
-                file.createNewFile();
-            } catch (IOException ex) {
-                Logger.getLogger(Window_Virtual_Disc_Creation.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }        
-        System.out.println("archivo existente");
-        try {
-            
-            FileReader fr = new FileReader(file);
-            BufferedReader br = new BufferedReader(fr);
-            String oldLine = "";
-            String linea;
-            int lineaLen=1;
-            while((linea=br.readLine())!=null){
-                oldLine.concat(linea);
-                lineaLen=linea.length();
-            }
-            //terminé de leer           
-            //modifico el string/disco
-            String contenido = txa_file_content.getText();
-            double lineasNecesarias = Math.ceil(contenido.length()/lineaLen); //cantidad de líneas vacías que necesita el archivo
-            String var = "0123456789012345\n0123456789012345\n________________\n0_______________\n0_______________\n________________\n________________\n";
-            int indexOfFirstEmpty = getValidEmpty(var,(int)lineasNecesarias, lineaLen);
-            if(indexOfFirstEmpty == -1){
+        if(validateData()){
+           //Memory Load
+            String memory = ut.loadDisc();
+            //Load the len line
+            int lineLenght = ut.lineLenght();
+            //Get the input of the text area
+            String contenido = txa_file_content.getText();        
+            //Calculate the necesary lines to store the file      
+            double lineasNecesarias = Math.ceil((float)contenido.length()/(float)lineLenght); //cantidad de líneas vacías que necesita el archivo                    
+            //Get a possible index value of the first space where
+            //String var= "_____\nramas\ncasa_\n_____\n_____\n";
+            List<Integer> emptyIndices = ut.getValidEmptyIdexed(memory,(int)lineasNecesarias, lineLenght);
+            //        
+            if(emptyIndices == null){
                 JOptionPane.showMessageDialog(this, "There is no free space on disc", "Error",  ERROR_MESSAGE);
             }
-            //_______
-            //_______
-            //escribo el disco
-//            FileWriter fw = new FileWriter(file);
-//            BufferedWriter bw = new BufferedWriter(fw);
-//            bw.write(content);
-              br.close();
-        } catch (IOException ex) {
-            Logger.getLogger(Window_Virtual_Disc_Creation.class.getName()).log(Level.SEVERE, null, ex);
+            //Modify the string memory
+            memory= ut.addFileToMemory(memory,contenido,emptyIndices,lineLenght);
+            //Writting the new memory
+            ut.WriteDisc(memory);
+            //Now we add the file in the logic file system
+            String fileName = (txf_file_name.getText().concat(".")).concat(txf_file_extension.getText());
+            FileSystemFile f = new FileSystemFile(fileName);
+            root.add(f);
+            this.dispose();            
+            parent.fillTree(root);
+            parent.RouteTextField.setText(root.getPath()+"/"+fileName);
+            JOptionPane.showMessageDialog(this, "The file was added correctly", "File added", INFORMATION_MESSAGE );        
+            parent.setVisible(true);
+               
         }
-    }//GEN-LAST:event_btn_create_fileActionPerformed
-    
-    public int getValidEmpty(String disc, int lineasNecesaria, int largoLinea){
-        int emptyLines=0;
-        int index=-1;
-        for(int i = 0; i< disc.length()&& emptyLines<lineasNecesaria ; i+=largoLinea){
-            char firstCharLine =disc.charAt(i);
-            if(emptyLines==0){
-                index = i;
-            }
-            if(firstCharLine=='_'){
-                emptyLines++;
-            }else{
-                emptyLines=0;
-            }
-        }
-        if(emptyLines < lineasNecesaria){
-            index = -1;
-        }
-        return index;
-    }
-   
-    private void validateData(){
+             
+    }//GEN-LAST:event_CreateFileButtonActionPerformed
+
+    private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
+        // TODO add your handling code here:
+        parent.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_CancelButtonActionPerformed
+       
+    private boolean validateData(){
       String strName = txf_file_name.getText();
       String strExt = txf_file_extension.getText();
       String data = txa_file_content.getText();
-      if(strName.equals("")){
+      if(strName.equals("") || strExt.equals("") || data.equals("")){
           JOptionPane.showMessageDialog(this, "Name can not be null", "Error",  ERROR_MESSAGE);
-      }  
-      if(strExt.equals("")){
-          JOptionPane.showMessageDialog(this, "Extention can not be null", "Error",  ERROR_MESSAGE);
-      }
-      if(data.equals("")){
-          JOptionPane.showMessageDialog(this, "Content can not be null", "Error",  ERROR_MESSAGE);
+          return false;
+      }else{
+          return true;
       }
     }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_create_file;
+    private javax.swing.JButton CancelButton;
+    private javax.swing.JButton CreateFileButton;
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
