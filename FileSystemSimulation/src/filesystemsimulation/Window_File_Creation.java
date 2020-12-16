@@ -174,21 +174,24 @@ public class Window_File_Creation extends javax.swing.JFrame {
             //        
             if(emptyIndices == null){
                 JOptionPane.showMessageDialog(this, "There is no free space on disc", "Error",  ERROR_MESSAGE);
+            }else{
+                //Modify the string memory
+                memory= ut.addFileToMemory(memory,contenido,emptyIndices,lineLenght);
+                //Writting the new memory
+                ut.WriteDisc(memory);
+                //Now we add the file in the logic file system
+                String fileName = (txf_file_name.getText().concat(".")).concat(txf_file_extension.getText());
+                FileSystemFile f = new FileSystemFile(fileName);
+                f.setSize(memory.length()); //
+                f.setListOfIndices(emptyIndices); //Necesary to remove...
+                root.add(f);
+                this.dispose();            
+                parent.fillTree(root);
+                parent.RouteTextField.setText(root.getPath()+"/"+fileName);
+                JOptionPane.showMessageDialog(this, "The file was added correctly", "File added", INFORMATION_MESSAGE );        
+                parent.setVisible(true);                
             }
-            //Modify the string memory
-            memory= ut.addFileToMemory(memory,contenido,emptyIndices,lineLenght);
-            //Writting the new memory
-            ut.WriteDisc(memory);
-            //Now we add the file in the logic file system
-            String fileName = (txf_file_name.getText().concat(".")).concat(txf_file_extension.getText());
-            FileSystemFile f = new FileSystemFile(fileName);
-            root.add(f);
-            this.dispose();            
-            parent.fillTree(root);
-            parent.RouteTextField.setText(root.getPath()+"/"+fileName);
-            JOptionPane.showMessageDialog(this, "The file was added correctly", "File added", INFORMATION_MESSAGE );        
-            parent.setVisible(true);
-               
+
         }
              
     }//GEN-LAST:event_CreateFileButtonActionPerformed

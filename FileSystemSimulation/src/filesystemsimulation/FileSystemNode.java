@@ -20,17 +20,22 @@ public abstract class FileSystemNode implements Comparable<FileSystemNode> {
     private LocalDateTime created;
     private LocalDateTime lastUpdated;
     private LocalDateTime lastAccessed;
+    private int size;
     private List<Integer> listOfInicialIndices;
 
     public FileSystemNode(String name) {
         this.name = name;
         this.created = LocalDateTime.now();
         this.lastUpdated = LocalDateTime.now();
-        this.lastAccessed = LocalDateTime.now();
+        this.lastAccessed = LocalDateTime.now();                
     }
     
     public void setListOfIndices(List<Integer> indices){
         listOfInicialIndices = indices;
+    }
+    
+    public void setSize(int fileSize){
+        size = fileSize;
     }
 
     public boolean isDirectory() {
