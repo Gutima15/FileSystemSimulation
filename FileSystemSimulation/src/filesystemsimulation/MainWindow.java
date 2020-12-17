@@ -3,6 +3,7 @@ package filesystemsimulation;
 import java.util.List;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -161,6 +162,11 @@ public class MainWindow extends javax.swing.JFrame {
         });
 
         LookButton.setText("Look");
+        LookButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LookButtonActionPerformed(evt);
+            }
+        });
 
         LoadButton.setText("Load");
 
@@ -243,7 +249,7 @@ public class MainWindow extends javax.swing.JFrame {
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                                 .addComponent(DirectoryLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(NewDirectoryButton, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
+                                                .addComponent(NewDirectoryButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addComponent(MoveRouteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                             .addComponent(BothLabel))
                                         .addGap(0, 0, Short.MAX_VALUE))
@@ -383,15 +389,30 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_CloseButtonActionPerformed
 
     private void EditFileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditFileButtonActionPerformed
-        
-        Window_File_Editor editWindow = new Window_File_Editor(tree, this, getFiles(tree));
-        this.dispose();
-        editWindow.setVisible(true);
+        List<FileSystemFile> files = getFiles(tree);
+        if(files.size() == 0){
+            JOptionPane.showMessageDialog(this, "This folder does not contain any file", "Empty folder", INFORMATION_MESSAGE );
+        } else {
+            Window_File_Editor editWindow = new Window_File_Editor(tree, this, files);
+            this.dispose();
+            editWindow.setVisible(true);
+        }
     }//GEN-LAST:event_EditFileButtonActionPerformed
 
     private void PropertiesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PropertiesButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_PropertiesButtonActionPerformed
+
+    private void LookButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LookButtonActionPerformed
+        List<FileSystemFile> files = getFiles(tree);
+        if(files.size() == 0){
+            JOptionPane.showMessageDialog(this, "This folder does not contain any file", "Empty folder", INFORMATION_MESSAGE );
+        } else {
+            Window_File_View viewWindow = new Window_File_View(tree, this, files);
+            this.dispose();
+            viewWindow.setVisible(true);
+        }
+    }//GEN-LAST:event_LookButtonActionPerformed
                
     /**
      * @param args the command line arguments
