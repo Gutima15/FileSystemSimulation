@@ -400,7 +400,14 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_EditFileButtonActionPerformed
 
     private void PropertiesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PropertiesButtonActionPerformed
-        // TODO add your handling code here:
+        List<FileSystemFile> files = getFiles(tree);
+        if(files.size() == 0){
+            JOptionPane.showMessageDialog(this, "This folder does not contain any file", "Empty folder", INFORMATION_MESSAGE );
+        } else {
+            Window_File_Properties editWindow = new Window_File_Properties(tree, this, files);
+            this.dispose();
+            editWindow.setVisible(true);
+        }
     }//GEN-LAST:event_PropertiesButtonActionPerformed
 
     private void LookButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LookButtonActionPerformed
