@@ -74,7 +74,7 @@
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                               <Component id="DirectoryLabel" max="32767" attributes="0"/>
-                                              <Component id="NewDirectoryButton" pref="101" max="32767" attributes="0"/>
+                                              <Component id="NewDirectoryButton" max="32767" attributes="0"/>
                                               <Component id="MoveRouteButton" alignment="0" max="32767" attributes="0"/>
                                           </Group>
                                           <Component id="BothLabel" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -261,6 +261,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Look"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="LookButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="LoadButton">
       <Properties>
