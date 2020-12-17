@@ -41,14 +41,16 @@ public class Utilities {
         for(int i = 0 ; i<emptyIndices.size(); i++){  
             String previousPart = memory.substring(0,emptyIndices.get(i));             //"_____"
             String middlePart = "";
-            String secondPart = memory.substring(emptyIndices.get(i)+lineLenght-1,memory.length());//"\nramas\ncasa_\n_____\n_____\n"
+            String secondPart = memory.substring(emptyIndices.get(i)+lineLenght-1,memory.length());//"\n_____\ncasa_\n_____\n_____\n"
             for(int j = emptyIndices.get(i); j<emptyIndices.get(i)+lineLenght-1 && contenido.length()>0; j++){                
                 middlePart = middlePart.concat(Character.toString(contenido.charAt(0)));                                                
-                contenido = contenido.substring(1, contenido.length());                
+                contenido = contenido.substring(1, contenido.length());
+            }          
+            String middleFixed = "";
+            for(int k=0; k<(lineLenght-1)-middlePart.length(); k++){ 
+                middleFixed = middleFixed.concat("_");
             }            
-            for(int k=0; k<(lineLenght-1)-middlePart.length(); k++){
-                middlePart = middlePart.concat("_");
-            }            
+            middlePart = middlePart.concat(middleFixed);
             memory= previousPart.concat( middlePart.concat(secondPart) );     
         }
         return memory;
@@ -69,8 +71,7 @@ public class Utilities {
         }
         return actual;
     }
-        
-    
+            
     public int lineLenght(){
          File file = new File("./disc.txt");
          int lineaLen = -1;
@@ -98,7 +99,6 @@ public class Utilities {
         try {            
             File file = new File("./disc.txt");      
             Scanner myReader = new Scanner(file);           
-            String linea;
             while(myReader.hasNextLine()){
                 oldLine = oldLine.concat(myReader.nextLine()+"\n");                
             }
@@ -151,8 +151,8 @@ public class Utilities {
         }
         return index;
     }
-    
-    public List<Integer> getValidEmptyIdexed(String disc, int lineasNecesaria, int largoLinea){
+          
+    public List<Integer> getValidEmptyIndexed(String disc, int lineasNecesaria, int largoLinea){
         String var= "_____\nramas\ncasa_\n_____\n_____\n";
         int emptyLines=0;
         List<Integer> fileIndices = new ArrayList<Integer>();        

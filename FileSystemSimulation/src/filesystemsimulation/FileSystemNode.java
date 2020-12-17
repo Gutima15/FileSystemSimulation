@@ -21,7 +21,7 @@ public abstract class FileSystemNode implements Comparable<FileSystemNode> {
     private LocalDateTime lastUpdated;
     private LocalDateTime lastAccessed;
     private int size;
-    private List<Integer> listOfInicialIndices;
+    public List<Integer> listOfInicialIndices;
 
     public FileSystemNode(String name) {
         this.name = name;

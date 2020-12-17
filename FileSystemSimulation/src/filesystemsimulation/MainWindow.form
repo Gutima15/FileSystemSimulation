@@ -57,6 +57,8 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="LookButton" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="PropertiesButton" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
                                       <Component id="LoadButton" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="DownloadButton" min="-2" max="-2" attributes="0"/>
@@ -142,6 +144,7 @@
                                   <Component id="LoadButton" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="DownloadButton" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="CopyButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="PropertiesButton" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -312,6 +315,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CloseButtonActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="PropertiesButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Properties"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="PropertiesButtonActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

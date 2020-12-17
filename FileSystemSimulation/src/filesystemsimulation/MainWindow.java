@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
 public class MainWindow extends javax.swing.JFrame {
     Utilities ut = new Utilities();
     private FileSystemDirectory tree;
-    private FileSystemDirectory treeTemp;
+    
     public MainWindow() {
         initComponents();
         tree = new FileSystemDirectory("root");
@@ -33,7 +33,38 @@ public class MainWindow extends javax.swing.JFrame {
         String finalResult = sb.toString().replace( treeToPrint.getName()+"/" , treeToPrint.getName()+ " <-- You are here" );
         TreeTextArea.setText(finalResult);
     }
-       
+    
+    public FileSystemDirectory moveDown (List<String> list, FileSystemDirectory actual){  
+         // [root, badilla]
+        if (list.isEmpty()){
+            return actual;
+        }else{
+            for(FileSystemNode n:actual.getNodes()){
+                System.out.println(n.getName()+" "+list.get(0)+" "+n.getName().equals(list.get(0)));
+                if(n.getName().equals(list.get(0))){
+                    actual = (FileSystemDirectory) n;
+                    list.remove(0);
+                    moveDown(list, actual);
+                    break;
+                }else{
+                    actual = null;
+                }                     
+            }
+        }
+        return actual;
+        
+    }
+    
+    public List<FileSystemFile> getFiles(FileSystemDirectory actualRoot){
+        List<FileSystemFile> result = new ArrayList<FileSystemFile>();
+        for(FileSystemNode file: actualRoot.getNodes()){
+            if(!file.isDirectory()){
+                result.add((FileSystemFile) file);
+            }
+        }
+        return result;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -68,6 +99,7 @@ public class MainWindow extends javax.swing.JFrame {
         UpSeparator = new javax.swing.JSeparator();
         LastSeparator = new javax.swing.JSeparator();
         CloseButton = new javax.swing.JButton();
+        PropertiesButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("File system");
@@ -158,6 +190,13 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
+        PropertiesButton.setText("Properties");
+        PropertiesButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PropertiesButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -188,6 +227,8 @@ public class MainWindow extends javax.swing.JFrame {
                                         .addComponent(EditFileButton)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(LookButton)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(PropertiesButton)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(LoadButton)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -255,7 +296,8 @@ public class MainWindow extends javax.swing.JFrame {
                                     .addComponent(LookButton)
                                     .addComponent(LoadButton)
                                     .addComponent(DownloadButton)
-                                    .addComponent(CopyButton)))
+                                    .addComponent(CopyButton)
+                                    .addComponent(PropertiesButton)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(MoveBothButton)
@@ -341,34 +383,16 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_CloseButtonActionPerformed
 
     private void EditFileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditFileButtonActionPerformed
-        String ruta = RouteTextField.getText();
-        Window_File_Editor editWindow = new Window_File_Editor(tree, this, ruta);
-    }//GEN-LAST:event_EditFileButtonActionPerformed
-   
-    
-      
-    public FileSystemDirectory moveDown (List<String> list, FileSystemDirectory actual){  
-         // [root, badilla]
-        if (list.isEmpty()){
-            return actual;
-        }else{
-            for(FileSystemNode n:actual.getNodes()){
-                System.out.println(n.getName()+" "+list.get(0)+" "+n.getName().equals(list.get(0)));
-                if(n.getName().equals(list.get(0))){
-                    actual = (FileSystemDirectory) n;
-                    list.remove(0);
-                    moveDown(list, actual);
-                    break;
-                }else{
-                    actual = null;
-                }                     
-            }
-        }
-        return actual;
         
-    }
-    
-    
+        Window_File_Editor editWindow = new Window_File_Editor(tree, this, getFiles(tree));
+        this.dispose();
+        editWindow.setVisible(true);
+    }//GEN-LAST:event_EditFileButtonActionPerformed
+
+    private void PropertiesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PropertiesButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_PropertiesButtonActionPerformed
+               
     /**
      * @param args the command line arguments
      */
@@ -424,6 +448,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JButton MoveRouteButton;
     private javax.swing.JButton NewDirectoryButton;
     private javax.swing.JButton NewFileButton;
+    private javax.swing.JButton PropertiesButton;
     private javax.swing.JButton RemoveButton;
     private javax.swing.JLabel RouteLabel;
     public javax.swing.JTextField RouteTextField;

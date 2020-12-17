@@ -48,13 +48,13 @@ public class Window_File_Creation extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         lbl_file_name = new javax.swing.JLabel();
         txf_file_name = new javax.swing.JTextField();
-        lbl_file_extension = new javax.swing.JLabel();
         txf_file_extension = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         txa_file_content = new javax.swing.JTextArea();
         lbl_file_content = new javax.swing.JLabel();
         CancelButton = new javax.swing.JButton();
         CreateFileButton = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         jButton1.setText("jButton1");
 
@@ -64,8 +64,6 @@ public class Window_File_Creation extends javax.swing.JFrame {
 
         lbl_file_name.setText("Name:");
 
-        lbl_file_extension.setText("Extention:");
-
         txa_file_content.setColumns(20);
         txa_file_content.setRows(5);
         jScrollPane1.setViewportView(txa_file_content);
@@ -73,7 +71,6 @@ public class Window_File_Creation extends javax.swing.JFrame {
         lbl_file_content.setText("Content:");
 
         CancelButton.setText("Cancel");
-        CancelButton.setActionCommand("Cancel");
         CancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CancelButtonActionPerformed(evt);
@@ -87,6 +84,8 @@ public class Window_File_Creation extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setText(".");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -95,17 +94,17 @@ public class Window_File_Creation extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbl_file_content, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(lbl_file_name, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lbl_file_name)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txf_file_name, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lbl_file_extension, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txf_file_extension, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1))
+                                .addComponent(txf_file_name, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txf_file_extension, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
@@ -121,8 +120,8 @@ public class Window_File_Creation extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_file_name)
                     .addComponent(txf_file_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_file_extension)
-                    .addComponent(txf_file_extension, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txf_file_extension, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lbl_file_content)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -168,9 +167,9 @@ public class Window_File_Creation extends javax.swing.JFrame {
             String contenido = txa_file_content.getText();        
             //Calculate the necesary lines to store the file      
             double lineasNecesarias = Math.ceil((float)contenido.length()/(float)lineLenght); //cantidad de líneas vacías que necesita el archivo                    
-            //Get a possible index value of the first space where
+            //Get a possible index value of the first space where we can write
             //String var= "_____\nramas\ncasa_\n_____\n_____\n";
-            List<Integer> emptyIndices = ut.getValidEmptyIdexed(memory,(int)lineasNecesarias, lineLenght);
+            List<Integer> emptyIndices = ut.getValidEmptyIndexed(memory,(int)lineasNecesarias, lineLenght);
             //        
             if(emptyIndices == null){
                 JOptionPane.showMessageDialog(this, "There is no free space on disc", "Error",  ERROR_MESSAGE);
@@ -186,12 +185,10 @@ public class Window_File_Creation extends javax.swing.JFrame {
                 f.setListOfIndices(emptyIndices); //Necesary to remove...
                 root.add(f);
                 this.dispose();            
-                parent.fillTree(root);
-                parent.RouteTextField.setText(root.getPath()+"/"+fileName);
+                parent.fillTree(root);                
                 JOptionPane.showMessageDialog(this, "The file was added correctly", "File added", INFORMATION_MESSAGE );        
                 parent.setVisible(true);                
             }
-
         }
              
     }//GEN-LAST:event_CreateFileButtonActionPerformed
@@ -214,15 +211,14 @@ public class Window_File_Creation extends javax.swing.JFrame {
       }
     }
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton CancelButton;
     private javax.swing.JButton CreateFileButton;
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbl_file_content;
-    private javax.swing.JLabel lbl_file_extension;
     private javax.swing.JLabel lbl_file_name;
     private javax.swing.JTextArea txa_file_content;
     private javax.swing.JTextField txf_file_extension;
