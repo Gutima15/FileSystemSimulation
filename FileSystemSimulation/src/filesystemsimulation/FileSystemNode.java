@@ -82,11 +82,15 @@ public abstract class FileSystemNode implements Comparable<FileSystemNode> {
 
     @Override
     public String toString() {
-        return "root=" + root +
-                ", \nname='" + name + '\'' +
-                ", \ncreated=" + created +
-                ", \nlastUpdated=" + lastUpdated +
-                ", \nlastAccessed=" + lastAccessed;
-
+        String result = "";
+        if(!isDirectory()){
+            result = "Route: " + root.getPath() +
+                "\nFile name: '" + name + '\'' +
+                "\nCreated: " + created +
+                "\nLast Updated: " + lastUpdated +
+                "\nLast Accessed: " + lastAccessed +
+                "\nSize: " + size + " Bytes";
+        }
+        return result;
     }
 }

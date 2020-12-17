@@ -181,7 +181,7 @@ public class Window_File_Creation extends javax.swing.JFrame {
                 //Now we add the file in the logic file system
                 String fileName = (txf_file_name.getText().concat(".")).concat(txf_file_extension.getText());
                 FileSystemFile f = new FileSystemFile(fileName);
-                f.setSize(memory.length()); //
+                f.setSize(contenido.length()); //
                 f.setListOfIndices(emptyIndices); //Necesary to remove...
                 root.add(f);
                 this.dispose();            

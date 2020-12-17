@@ -14,7 +14,6 @@ import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
  * @author adria
  */
 public class Window_File_View extends javax.swing.JFrame {
-
     FileSystemDirectory root;
     MainWindow parent;    
     List<FileSystemFile> files;
@@ -28,9 +27,6 @@ public class Window_File_View extends javax.swing.JFrame {
         this.parent = parent;
         files = file;
         setFileNames(files);
-        if(files.size() == 0){
-            JOptionPane.showMessageDialog(this, "This folder does not contain any file", "Empty folder", INFORMATION_MESSAGE );
-        }
     }
 
     public void setFileNames(List<FileSystemFile> files){
