@@ -38,24 +38,7 @@ public class MainWindow extends javax.swing.JFrame {
         TreeTextArea.setText(finalResult);
     }
     
-    public FileSystemDirectory moveDown (List<String> list, FileSystemDirectory actual){  
-        if (list.isEmpty()){
-            return actual;
-        }else{
-            for(FileSystemNode n:actual.getNodes()){                
-                if(n.getName().equals(list.get(0))){
-                    actual = (FileSystemDirectory) n;
-                    list.remove(0);
-                    actual = moveDown(list, actual);
-                    break;
-                }else{
-                    actual = null;
-                }                     
-            }
-        }
-        return actual;
-        
-    }
+    
     
     public List<FileSystemFile> getFiles(FileSystemDirectory actualRoot){
         List<FileSystemFile> result = new ArrayList<FileSystemFile>();
@@ -381,7 +364,6 @@ public class MainWindow extends javax.swing.JFrame {
             if(route[0].equals("root") && route.length==1){
                 JOptionPane.showMessageDialog(null, "Success in moving to " + tree.getPath());
             }else{      
-                String lastPathDir = list.get(list.size()-1);
                 list.remove(0);
                 tree = moveDown(list,tree);
                 if(tree == null){
