@@ -18,6 +18,7 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
 
 /**
@@ -187,29 +188,44 @@ public class Window_copy extends javax.swing.JFrame {
         if(root.getPath().equals(newRoute)){
             JOptionPane.showMessageDialog(null, "You can not copy the file in the same directory");        
         }else{
-//            List<String> list;  
-//            list = new ArrayList<String>();
-//            for(int i = 0; i< route.length; i++){
-//                list.add(route[i]);
-//            }
-//            FileSystemDirectory tempTree = root; //Aquí estábamos
-//            root = ut.moveUp(root); //Voy a root
-//            if(route[0].equals("root") && route.length==1){
-//                //JOptionPane.showMessageDialog(null, "Success in moving to " + tree.getPath());
-//                //Hacer copia en root
-//            }else{      
-//                String lastPathDir = list.get(list.size()-1);
-//                list.remove(0);
-//                tree = moveDown(list,tree);
-//                if(tree == null){
-//                    tree = tempTree;
-//                    JOptionPane.showMessageDialog(null, "Route not found");
-//                }else{
-//                    JOptionPane.showMessageDialog(null, "Success in moving to " + tree.getPath());                                                                  
-//                }                
-//            }
-//            RouteTextField.setText(tree.getPath());
-//            fillTree(tree);
+            List<String> list;  
+            list = new ArrayList<String>();
+            for(int i = 0; i< route.length; i++){
+                list.add(route[i]);
+            }
+            FileSystemDirectory tempTree = root; //Aquí estábamos
+            root = ut.moveUp(root); //Voy a root 
+            String lastPathDir = list.get(list.size()-1);
+            list.remove(0);
+            root = parent.moveDown(list,root);
+            if(root == null){
+                root = tempTree;
+                JOptionPane.showMessageDialog(null, "Route not found");
+            }else{
+                //"copio"
+                double lineasNecesarias = Math.ceil((float)content.length()/(float)(lineLenght-1));
+                List<Integer> emptyIndices = ut.getValidEmptyIndexed(memory,(int)lineasNecesarias, lineLenght);
+                if(emptyIndices == null){
+                JOptionPane.showMessageDialog(this, "There is no free space on disc", "Error",  ERROR_MESSAGE);
+                } else {
+                    //disc logic
+                    memory= ut.addFileToMemory(memory,content,emptyIndices,lineLenght);
+                    ut.WriteDisc(memory);
+                    //file system logic
+                    //Now we add the file in the logic file system
+                    String fileName = (file.getName());
+                    FileSystemFile f = new FileSystemFile(fileName);
+                    f.setSize(content.length()); //
+                    f.setListOfIndices(emptyIndices); //Necesary to remove...
+                    root.add(f);
+                }                
+            }               
+            JOptionPane.showMessageDialog(null, "Success copying the file to " + root.getPath());
+            root = tempTree;
+            parent.RouteTextField.setText(root.getPath());
+            parent.fillTree(root);
+            this.dispose();
+            parent.setVisible(true);
         }             
             
     }//GEN-LAST:event_copyButtonActionPerformed
