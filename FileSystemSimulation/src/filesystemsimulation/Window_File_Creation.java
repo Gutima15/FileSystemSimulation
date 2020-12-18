@@ -151,36 +151,40 @@ public class Window_File_Creation extends javax.swing.JFrame {
     private void CreateFileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateFileButtonActionPerformed
         // TODO add your handling code here:
         if(validateData()){
-           //Memory Load
-            String memory = ut.loadDisc();
-            //Load the len line
-            int lineLenght = ut.lineLenght();
-            //Get the input of the text area
-            String contenido = txa_file_content.getText(); 
-            contenido = contenido.replace("\n", " ");
-            //Calculate the necesary lines to store the file      
-            double lineasNecesarias = Math.ceil((float)contenido.length()/(float)(lineLenght-1)); //cantidad de líneas vacías que necesita el archivo  
-            //Get a possible index value of the first space where we can write
-            //String var= "_____\nramas\ncasa_\n_____\n_____\n";
-            List<Integer> emptyIndices = ut.getValidEmptyIndexed(memory,(int)lineasNecesarias, lineLenght);
-            //        
-            if(emptyIndices == null){
-                JOptionPane.showMessageDialog(this, "There is no free space on disc", "Error",  ERROR_MESSAGE);
-            }else{
-                //Modify the string memory
-                memory= ut.addFileToMemory(memory,contenido,emptyIndices,lineLenght);
-                //Writting the new memory
-                ut.WriteDisc(memory);
-                //Now we add the file in the logic file system
-                String fileName = (txf_file_name.getText().concat(".")).concat(txf_file_extension.getText());
-                FileSystemFile f = new FileSystemFile(fileName);
-                f.setSize(contenido.length()); //
-                f.setListOfIndices(emptyIndices); //Necesary to remove...
-                root.add(f);
-                this.dispose();            
-                parent.fillTree(root);                
-                JOptionPane.showMessageDialog(this, "The file was added correctly", "File added", INFORMATION_MESSAGE );        
-                parent.setVisible(true);                
+            if(ut.fileExitstOnDirectory(root, root.getPath(), txf_file_name.getText())){
+                JOptionPane.showMessageDialog(this, "There is a file with the same name in this directory", "Error",  ERROR_MESSAGE);
+            } else {
+               //Memory Load
+                String memory = ut.loadDisc();
+                //Load the len line
+                int lineLenght = ut.lineLenght();
+                //Get the input of the text area
+                String contenido = txa_file_content.getText(); 
+                contenido = contenido.replace("\n", " ");
+                //Calculate the necesary lines to store the file      
+                double lineasNecesarias = Math.ceil((float)contenido.length()/(float)(lineLenght-1)); //cantidad de líneas vacías que necesita el archivo  
+                //Get a possible index value of the first space where we can write
+                //String var= "_____\nramas\ncasa_\n_____\n_____\n";
+                List<Integer> emptyIndices = ut.getValidEmptyIndexed(memory,(int)lineasNecesarias, lineLenght);
+                //        
+                if(emptyIndices == null){
+                    JOptionPane.showMessageDialog(this, "There is no free space on disc", "Error",  ERROR_MESSAGE);
+                }else{
+                    //Modify the string memory
+                    memory= ut.addFileToMemory(memory,contenido,emptyIndices,lineLenght);
+                    //Writting the new memory
+                    ut.WriteDisc(memory);
+                    //Now we add the file in the logic file system
+                    String fileName = (txf_file_name.getText().concat(".")).concat(txf_file_extension.getText());
+                    FileSystemFile f = new FileSystemFile(fileName);
+                    f.setSize(contenido.length()); //
+                    f.setListOfIndices(emptyIndices); //Necesary to remove...
+                    root.add(f);
+                    this.dispose();            
+                    parent.fillTree(root);                
+                    JOptionPane.showMessageDialog(this, "The file was added correctly", "File added", INFORMATION_MESSAGE );        
+                    parent.setVisible(true);                
+                }
             }
         }
              

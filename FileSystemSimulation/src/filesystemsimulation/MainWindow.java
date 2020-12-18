@@ -365,7 +365,7 @@ public class MainWindow extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Success in moving to " + tree.getPath());
             }else{      
                 list.remove(0);
-                tree = moveDown(list,tree);
+                tree = ut.moveDown(list,tree);
                 if(tree == null){
                     tree = tempTree;
                     JOptionPane.showMessageDialog(null, "Route not found");

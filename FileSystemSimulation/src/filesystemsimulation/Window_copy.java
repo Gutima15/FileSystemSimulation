@@ -197,12 +197,11 @@ public class Window_copy extends javax.swing.JFrame {
             root = ut.moveUp(root); //Voy a root 
             String lastPathDir = list.get(list.size()-1);
             list.remove(0);
-            root = parent.moveDown(list,root);
+            root = ut.moveDown(list,root);
             if(root == null){
                 root = tempTree;
                 JOptionPane.showMessageDialog(null, "Route not found");
-            }else{
-                //"copio"
+            }else{                
                 double lineasNecesarias = Math.ceil((float)content.length()/(float)(lineLenght-1));
                 List<Integer> emptyIndices = ut.getValidEmptyIndexed(memory,(int)lineasNecesarias, lineLenght);
                 if(emptyIndices == null){
@@ -218,9 +217,9 @@ public class Window_copy extends javax.swing.JFrame {
                     f.setSize(content.length()); //
                     f.setListOfIndices(emptyIndices); //Necesary to remove...
                     root.add(f);
+                    JOptionPane.showMessageDialog(null, "Success copying the file to " + root.getPath());
                 }                
-            }               
-            JOptionPane.showMessageDialog(null, "Success copying the file to " + root.getPath());
+            }                           
             root = tempTree;
             parent.RouteTextField.setText(root.getPath());
             parent.fillTree(root);
