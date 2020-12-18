@@ -151,7 +151,8 @@ public class Window_File_Creation extends javax.swing.JFrame {
     private void CreateFileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateFileButtonActionPerformed
         // TODO add your handling code here:
         if(validateData()){
-            if(ut.fileExitstOnDirectory(root, root.getPath(), txf_file_name.getText())){
+            String fileName = (txf_file_name.getText().concat(".")).concat(txf_file_extension.getText());
+            if(ut.fileExitstOnDirectory(root, root.getPath(), fileName )){
                 JOptionPane.showMessageDialog(this, "There is a file with the same name in this directory", "Error",  ERROR_MESSAGE);
             } else {
                //Memory Load
@@ -174,8 +175,7 @@ public class Window_File_Creation extends javax.swing.JFrame {
                     memory= ut.addFileToMemory(memory,contenido,emptyIndices,lineLenght);
                     //Writting the new memory
                     ut.WriteDisc(memory);
-                    //Now we add the file in the logic file system
-                    String fileName = (txf_file_name.getText().concat(".")).concat(txf_file_extension.getText());
+                    //Now we add the file in the logic file system                    
                     FileSystemFile f = new FileSystemFile(fileName);
                     f.setSize(contenido.length()); //
                     f.setListOfIndices(emptyIndices); //Necesary to remove...

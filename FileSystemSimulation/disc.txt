@@ -1,10 +1,5 @@
-esta es nu
-etra prueb
-a de repet
-ición_____
-Esta es la
- validació
-n_________
-__________
-__________
-__________
+abcde
+abcde
+_____
+_____
+_____
