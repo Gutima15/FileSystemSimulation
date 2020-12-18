@@ -6,7 +6,10 @@
 package filesystemsimulation;
 //root/home/progra.py
 
+import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
 
 /**
  *
@@ -173,6 +176,7 @@ public class Window_File_Editor extends javax.swing.JFrame {
         String result = ut.memoryToString(memory, file.listOfInicialIndices, lineLenght);
         result = result.replace("_","");
         jTextAreaEditor.setText(result);
+        jComboBoxFile.setEnabled(false);
     }//GEN-LAST:event_btn_load_fileActionPerformed
 
     private void jComboBoxFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxFileActionPerformed
@@ -180,9 +184,61 @@ public class Window_File_Editor extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBoxFileActionPerformed
 
     private void btn_save_fileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_save_fileActionPerformed
-        //"\n_____\nhola \ncomo \nesta_\n_____\n" -> crece, decrece, igual tamaño
-        //[6,12,18,24]
-        //"\n_____\nhola \ncomo \nesta_\nhoy__\n"
+        String newContent = jTextAreaEditor.getText();
+        if(!newContent.equals("")){
+            //Memory Load
+            String memory = ut.loadDisc();
+            //Load the len line
+            int lineLenght = ut.lineLenght();
+            //Calculate the necesary lines to store the file      
+            double nuevasLineasNecesarias = Math.ceil((float)newContent.length()/(float)lineLenght); //cantidad de líneas vacías que necesita el archivo
+            int fileNameIndex = jComboBoxFile.getSelectedIndex();        
+            //buscar el archivo en files
+            FileSystemFile file = files.get(fileNameIndex);
+            double oldLineasNecesarias = (double) file.listOfInicialIndices.size();
+            double dif = oldLineasNecesarias - nuevasLineasNecesarias;
+            List<Integer> oldIndexList = new ArrayList(file.listOfInicialIndices.size());
+            for(Integer i: file.listOfInicialIndices){
+                oldIndexList.add(i);
+            }
+            if(dif < 0){
+                List<Integer> newEmptyIndices = ut.getValidEmptyIndexed(memory, (int)Math.abs(dif), lineLenght); //To Add
+                if(newEmptyIndices == null){
+                    JOptionPane.showMessageDialog(this, "There is no space on disc", "Full Disc", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    //add new indexes
+                    for(Integer i: newEmptyIndices){
+                        file.listOfInicialIndices.add(i);
+                    }
+                }
+            } else {
+                if(dif > 0){
+                    //remove extra indices
+                    for(int i = (int)oldLineasNecesarias; i > ((int)oldLineasNecesarias - dif) ; i--){
+                        file.listOfInicialIndices.remove(i-1);
+                    }
+                }
+            }
+            // "\n_____\nhola \n____\nesta_\nhoy__\n"
+            memory = ut.deleteFileInMemory(memory, oldIndexList, lineLenght);
+            //Modify the string memory
+            memory= ut.addFileToMemory(memory,newContent,file.listOfInicialIndices,lineLenght);
+            //Writting the new memory
+            ut.WriteDisc(memory);
+            //Now we add the file in the logic file system
+            file.setSize(newContent.length()); //
+            //file.setListOfIndices(emptyIndices); //Necesary to remove...
+            this.dispose();            
+            parent.fillTree(root);                
+            JOptionPane.showMessageDialog(this, "The file was edited correctly", "File edited", INFORMATION_MESSAGE );        
+            parent.setVisible(true);
+            // "\n_____\nhola \ncomo \nesta_\n_____\n" -> crece, decrece, igual tamaño
+            // [6,12,18,24, , ] delete, va a esas lineas y borra 
+            // "\n_____\nhola \ncomo \nesta_\nhoy__\n"
+        } else {
+            JOptionPane.showMessageDialog(this, "The new content of the file is empty", "File Content Empty", JOptionPane.ERROR_MESSAGE);
+        }
+        
     }//GEN-LAST:event_btn_save_fileActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
