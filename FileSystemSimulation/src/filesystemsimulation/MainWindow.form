@@ -269,11 +269,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Load"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="LoadButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="DownloadButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Download"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DownloadButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="CopyButton">
       <Properties>

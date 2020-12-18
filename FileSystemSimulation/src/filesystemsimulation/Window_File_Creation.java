@@ -5,15 +5,7 @@
  */
 package filesystemsimulation;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
@@ -164,9 +156,10 @@ public class Window_File_Creation extends javax.swing.JFrame {
             //Load the len line
             int lineLenght = ut.lineLenght();
             //Get the input of the text area
-            String contenido = txa_file_content.getText();        
+            String contenido = txa_file_content.getText(); 
+            contenido = contenido.replace("\n", " ");
             //Calculate the necesary lines to store the file      
-            double lineasNecesarias = Math.ceil((float)contenido.length()/(float)lineLenght); //cantidad de líneas vacías que necesita el archivo                    
+            double lineasNecesarias = Math.ceil((float)contenido.length()/(float)(lineLenght-1)); //cantidad de líneas vacías que necesita el archivo  
             //Get a possible index value of the first space where we can write
             //String var= "_____\nramas\ncasa_\n_____\n_____\n";
             List<Integer> emptyIndices = ut.getValidEmptyIndexed(memory,(int)lineasNecesarias, lineLenght);
@@ -210,6 +203,8 @@ public class Window_File_Creation extends javax.swing.JFrame {
           return true;
       }
     }
+    
+    //public boolean ifExistFile(String name)
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton CancelButton;

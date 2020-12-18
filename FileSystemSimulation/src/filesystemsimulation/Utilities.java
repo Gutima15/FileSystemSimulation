@@ -94,6 +94,23 @@ public class Utilities {
         return lineaLen;
     }
     
+    public String getFileContent(File file){   
+        String line = "";
+        try {                        
+            Scanner myReader = new Scanner(file);           
+            while(myReader.hasNextLine()){
+                line = line.concat(myReader.nextLine()+"\n");                
+            }
+            myReader.close();
+            
+            return line;              
+        } catch (FileNotFoundException ex) {
+            System.out.println("An error occurred.");
+            ex.printStackTrace();
+        }        
+        return line;
+    }
+    
     public String loadDisc(){   
         String oldLine = "";
         try {            

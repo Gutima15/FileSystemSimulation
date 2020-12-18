@@ -2,7 +2,10 @@ package filesystemsimulation;
 
 import java.util.List;
 import java.util.ArrayList;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import java.io.File;
+import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
 
 /*
@@ -169,8 +172,18 @@ public class MainWindow extends javax.swing.JFrame {
         });
 
         LoadButton.setText("Load");
+        LoadButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LoadButtonActionPerformed(evt);
+            }
+        });
 
         DownloadButton.setText("Download");
+        DownloadButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DownloadButtonActionPerformed(evt);
+            }
+        });
 
         CopyButton.setText("Copy");
 
@@ -420,7 +433,53 @@ public class MainWindow extends javax.swing.JFrame {
             viewWindow.setVisible(true);
         }
     }//GEN-LAST:event_LookButtonActionPerformed
-               
+
+    private void LoadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoadButtonActionPerformed
+        JFileChooser fc = new JFileChooser();
+        
+        int returnVal = fc.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION){
+            String memory = ut.loadDisc();
+            //Load the len line
+            int lineLenght = ut.lineLenght();            
+            File selectedFile = fc.getSelectedFile();
+            String content = ut.getFileContent(selectedFile);
+            content = content.replace("\n", " ");
+            double lineasNecesarias = Math.ceil((float)content.length()/(float)(lineLenght-1)); //cantidad de líneas vacías que necesita el archivo                    
+            //Get a possible index value of the first space where we can write
+            //String var= "_____\nramas\ncasa_\n_____\n_____\n";
+            List<Integer> emptyIndices = ut.getValidEmptyIndexed(memory,(int)lineasNecesarias, lineLenght);
+            //        
+            if(emptyIndices == null){
+                JOptionPane.showMessageDialog(this, "There is no free space on disc", "Error",  ERROR_MESSAGE);
+            }else{
+                //Modify the string memory
+                memory= ut.addFileToMemory(memory,content,emptyIndices,lineLenght);
+                //Writting the new memory
+                ut.WriteDisc(memory);
+                //Now we add the file in the logic file system
+                String fileName = selectedFile.getName();
+                FileSystemFile f = new FileSystemFile(fileName);
+                f.setSize(content.length()); //
+                f.setListOfIndices(emptyIndices); //Necesary to remove...
+                tree.add(f);          
+                this.fillTree(tree);                
+                JOptionPane.showMessageDialog(this, "The file was added correctly", "File added", INFORMATION_MESSAGE );   
+            }
+        }
+    }//GEN-LAST:event_LoadButtonActionPerformed
+
+    private void DownloadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DownloadButtonActionPerformed
+        List<FileSystemFile> files = getFiles(tree);
+        if(files.size() == 0){
+            JOptionPane.showMessageDialog(this, "This folder does not contain any file", "Empty folder", INFORMATION_MESSAGE );
+        } else {
+            Window_download downloadWindow = new Window_download(tree, this, files);
+            this.dispose();
+            downloadWindow.setVisible(true);
+        }
+    }//GEN-LAST:event_DownloadButtonActionPerformed
+                 
     /**
      * @param args the command line arguments
      */
