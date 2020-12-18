@@ -71,7 +71,70 @@ public class Utilities {
         }
         return actual;
     }
-            
+    
+    public FileSystemDirectory moveDown (List<String> list, FileSystemDirectory actual){  
+        if (list.isEmpty()){
+            return actual;
+        }else{
+            for(FileSystemNode n:actual.getNodes()){                
+                if(n.getName().equals(list.get(0))){
+                    actual = (FileSystemDirectory) n;
+                    list.remove(0);
+                    actual = moveDown(list, actual);
+                    break;
+                }else{
+                    actual = null;
+                }                     
+            }
+        }
+        return actual;
+    }
+    
+    public boolean fileExitstOnDirectory(FileSystemDirectory actual, String pathToSerch, String fileName){
+        boolean result = false;
+        String[] route = pathToSerch.split("/");
+        List<String> list;  
+        list = new ArrayList<String>();
+        for(int i = 0; i< route.length; i++){
+            list.add(route[i]);
+        }
+        FileSystemDirectory tempTree = actual;
+        tempTree = moveUp(actual); //Voy a root
+        list.remove(0);
+        tempTree = moveDown(list,tempTree);
+        if(tempTree==null){ //NO ESTA EL DIR
+            result = false;
+        } else {
+            for(FileSystemNode f: tempTree.getNodes()){
+                if(!f.isDirectory()){ //SOLO ARCHIVOS
+                    if(f.getName().equals(fileName)){
+                        result = true;
+                        break;
+                    }
+                }
+            }
+        }
+        return result;
+    }
+     
+    public boolean directoryExist(FileSystemDirectory actual, String pathToSerch){
+        boolean result = false;
+        String[] route = pathToSerch.split("/");
+        List<String> list;  
+        list = new ArrayList<String>();
+        for(int i = 0; i< route.length; i++){
+            list.add(route[i]);
+        }
+        FileSystemDirectory tempTree = actual;
+        tempTree = moveUp(actual); //Voy a root
+        list.remove(0);
+        tempTree = moveDown(list,tempTree);
+        if(tempTree!=null){ //NO ESTA EL DIR
+            result = true;  
+        }
+        return result;
+    }
+    
     public int lineLenght(){
          File file = new File("./disc.txt");
          int lineaLen = -1;
