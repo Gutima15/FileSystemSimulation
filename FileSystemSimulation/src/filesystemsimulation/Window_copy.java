@@ -12,6 +12,7 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -23,7 +24,7 @@ import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
  *
  * @author adria
  */
-public class Window_download extends javax.swing.JFrame {
+public class Window_copy extends javax.swing.JFrame {
     FileSystemDirectory root;
     MainWindow parent;    
     List<FileSystemFile> files;
@@ -31,7 +32,7 @@ public class Window_download extends javax.swing.JFrame {
     /**
      * Creates new form Window_File_View
      */
-    public Window_download(FileSystemDirectory rootName, MainWindow parent, List<FileSystemFile> file) {
+    public Window_copy(FileSystemDirectory rootName, MainWindow parent, List<FileSystemFile> file) {
         initComponents();
         root = rootName;        
         this.parent = parent;
@@ -57,8 +58,10 @@ public class Window_download extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         lbl_file_name = new javax.swing.JLabel();
         cbx_file_name = new javax.swing.JComboBox<>();
-        downloadButton = new javax.swing.JButton();
+        copyButton = new javax.swing.JButton();
         btn_regresar = new javax.swing.JButton();
+        jLabelTo = new javax.swing.JLabel();
+        jTextFieldPath = new javax.swing.JTextField();
 
         jButton1.setText("jButton1");
 
@@ -66,7 +69,7 @@ public class Window_download extends javax.swing.JFrame {
         setTitle("Download file");
         setResizable(false);
 
-        lbl_file_name.setText("File: ");
+        lbl_file_name.setText("Copy file:");
 
         cbx_file_name.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -74,10 +77,11 @@ public class Window_download extends javax.swing.JFrame {
             }
         });
 
-        downloadButton.setText("Download");
-        downloadButton.addActionListener(new java.awt.event.ActionListener() {
+        copyButton.setText("Copy");
+        copyButton.setActionCommand("Copy");
+        copyButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                downloadButtonActionPerformed(evt);
+                copyButtonActionPerformed(evt);
             }
         });
 
@@ -88,22 +92,39 @@ public class Window_download extends javax.swing.JFrame {
             }
         });
 
+        jLabelTo.setText("To:");
+
+        jTextFieldPath.setText("root");
+        jTextFieldPath.setToolTipText("");
+        jTextFieldPath.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldPathActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(lbl_file_name, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cbx_file_name, 0, 225, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btn_regresar, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(downloadButton, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(10, 10, 10))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                        .addComponent(copyButton, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(lbl_file_name, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cbx_file_name, 0, 210, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabelTo)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jTextFieldPath)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -112,11 +133,15 @@ public class Window_download extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_file_name)
                     .addComponent(cbx_file_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(downloadButton)
+                    .addComponent(jLabelTo)
+                    .addComponent(jTextFieldPath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(copyButton)
                     .addComponent(btn_regresar))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addGap(17, 17, 17))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -132,8 +157,8 @@ public class Window_download extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -146,47 +171,67 @@ public class Window_download extends javax.swing.JFrame {
         parent.setVisible(true);
     }//GEN-LAST:event_btn_regresarActionPerformed
 
-    private void downloadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_downloadButtonActionPerformed
+    private void copyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyButtonActionPerformed
         //agarrar el nombre del jcombobox
         int fileNameIndex = cbx_file_name.getSelectedIndex();
         //buscar el archivo en files
         FileSystemFile file = files.get(fileNameIndex);
-        //cargar en textArea
+        //cargar en string
         String memory = ut.loadDisc();
         int lineLenght = ut.lineLenght();
-        String result = ut.memoryToString(memory, file.listOfInicialIndices, lineLenght);
-        result = result.replace("_","");        
-        File downloadfile = new File("./downloaded_files/"+file.getName()); 
-        if(!downloadfile.exists()){
-            try {
-                downloadfile.createNewFile();
-            } catch (IOException ex) {
-                Logger.getLogger(Window_Virtual_Disc_Creation.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        try {
-            FileWriter fw = new FileWriter(downloadfile);
-            BufferedWriter bw = new BufferedWriter(fw);
-            bw.write(result);
-            bw.close();
-        } catch (IOException ex) {
-            Logger.getLogger(Window_Virtual_Disc_Creation.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        JOptionPane.showMessageDialog(this, "The file was downloaded correctly", "File downloaded", INFORMATION_MESSAGE );           
-    }//GEN-LAST:event_downloadButtonActionPerformed
+        String content = ut.memoryToString(memory, file.listOfInicialIndices, lineLenght);
+        content = content.replace("_","");
+        //obtener el nuevo path
+        String newRoute = jTextFieldPath.getText();      
+        String[] route = newRoute.split("/");
+        if(root.getPath().equals(newRoute)){
+            JOptionPane.showMessageDialog(null, "You can not copy the file in the same directory");        
+        }else{
+//            List<String> list;  
+//            list = new ArrayList<String>();
+//            for(int i = 0; i< route.length; i++){
+//                list.add(route[i]);
+//            }
+//            FileSystemDirectory tempTree = root; //Aquí estábamos
+//            root = ut.moveUp(root); //Voy a root
+//            if(route[0].equals("root") && route.length==1){
+//                //JOptionPane.showMessageDialog(null, "Success in moving to " + tree.getPath());
+//                //Hacer copia en root
+//            }else{      
+//                String lastPathDir = list.get(list.size()-1);
+//                list.remove(0);
+//                tree = moveDown(list,tree);
+//                if(tree == null){
+//                    tree = tempTree;
+//                    JOptionPane.showMessageDialog(null, "Route not found");
+//                }else{
+//                    JOptionPane.showMessageDialog(null, "Success in moving to " + tree.getPath());                                                                  
+//                }                
+//            }
+//            RouteTextField.setText(tree.getPath());
+//            fillTree(tree);
+        }             
+            
+    }//GEN-LAST:event_copyButtonActionPerformed
 
     private void cbx_file_nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_file_nameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbx_file_nameActionPerformed
+
+    private void jTextFieldPathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPathActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldPathActionPerformed
 
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_regresar;
     private javax.swing.JComboBox<String> cbx_file_name;
-    private javax.swing.JButton downloadButton;
+    private javax.swing.JButton copyButton;
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabelTo;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField jTextFieldPath;
     private javax.swing.JLabel lbl_file_name;
     // End of variables declaration//GEN-END:variables
 }

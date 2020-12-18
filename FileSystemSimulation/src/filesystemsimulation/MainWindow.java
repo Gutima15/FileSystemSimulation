@@ -39,16 +39,14 @@ public class MainWindow extends javax.swing.JFrame {
     }
     
     public FileSystemDirectory moveDown (List<String> list, FileSystemDirectory actual){  
-         // [root, badilla]
         if (list.isEmpty()){
             return actual;
         }else{
-            for(FileSystemNode n:actual.getNodes()){
-                System.out.println(n.getName()+" "+list.get(0)+" "+n.getName().equals(list.get(0)));
+            for(FileSystemNode n:actual.getNodes()){                
                 if(n.getName().equals(list.get(0))){
                     actual = (FileSystemDirectory) n;
                     list.remove(0);
-                    moveDown(list, actual);
+                    actual = moveDown(list, actual);
                     break;
                 }else{
                     actual = null;
@@ -186,6 +184,11 @@ public class MainWindow extends javax.swing.JFrame {
         });
 
         CopyButton.setText("Copy");
+        CopyButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CopyButtonActionPerformed(evt);
+            }
+        });
 
         BothLabel.setText("Both");
 
@@ -385,11 +388,7 @@ public class MainWindow extends javax.swing.JFrame {
                     tree = tempTree;
                     JOptionPane.showMessageDialog(null, "Route not found");
                 }else{
-                    if(list.isEmpty())                    {
-                        JOptionPane.showMessageDialog(null, "Success in moving to " + tree.getPath());                        
-                    }else{
-                        JOptionPane.showMessageDialog(null, "Path not found. Moving to the last valid path: " + tree.getPath());                        
-                    }
+                    JOptionPane.showMessageDialog(null, "Success in moving to " + tree.getPath());                                                                  
                 }                
             }
             RouteTextField.setText(tree.getPath());
@@ -479,6 +478,18 @@ public class MainWindow extends javax.swing.JFrame {
             downloadWindow.setVisible(true);
         }
     }//GEN-LAST:event_DownloadButtonActionPerformed
+
+    private void CopyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CopyButtonActionPerformed
+        List<FileSystemFile> files = getFiles(tree);
+        if(files.size() == 0){
+            JOptionPane.showMessageDialog(this, "This folder does not contain any file", "Empty folder", INFORMATION_MESSAGE );
+        } else {
+            Window_copy copyWindow = new Window_copy(tree,this,files);
+            this.dispose();
+            copyWindow.setVisible(true);
+        }
+        
+    }//GEN-LAST:event_CopyButtonActionPerformed
                  
     /**
      * @param args the command line arguments
