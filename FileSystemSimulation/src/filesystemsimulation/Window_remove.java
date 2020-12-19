@@ -150,30 +150,27 @@ public class Window_remove extends javax.swing.JFrame {
         //agarrar el nombre del jcombobox
         int fileNameIndex = cbx_file_name.getSelectedIndex();
         //buscar el archivo en files
-        FileSystemNode dirFile = dirFiles.get(fileNameIndex);                
-        FileSystemDirectory tempTree = root;
-        root = deleteDirFile(dirFile,root);
-        if(root == null){
-            root = tempTree;
-            JOptionPane.showMessageDialog(this, "Not file or directory to remove", "Remove Error", ERROR );   
-        } else{
-            JOptionPane.showMessageDialog(this, "The file or directory was removed successfully", "Remove done", INFORMATION_MESSAGE );               
-        }
+        FileSystemNode dirFile = dirFiles.get(fileNameIndex);                        
+        Iterator<FileSystemNode> it= null;
+        if(dirFile.isDirectory()){
+            root = deleteDir(dirFile,root,it);
+        }else{            
+            ut.removeDiscFile((FileSystemFile) dirFile);
+            root.getNodes().remove(dirFile);
+        }                
         parent.fillTree(root);
         this.dispose();
+        parent.setVisible(true);
     }//GEN-LAST:event_removeButtonActionPerformed
     
-    public FileSystemDirectory deleteDirFile(FileSystemNode dirFile, FileSystemDirectory root){
+    public FileSystemDirectory deleteDir(FileSystemNode dirFile, FileSystemDirectory root, Iterator<FileSystemNode> iterator){
         if(root.getNodes().isEmpty()){
             return root;
         }else{
             if(!dirFile.isDirectory()){ //FILES
-                //removeLocalFile
-                //String memory = ut.loadDisc();
-                //int lineLenght = ut.lineLenght();
-                //String result = ut.deleteLocalDirFile();
-                //ut.WriteDisc(memory);                
-                root.getNodes().remove(dirFile);  
+                //removeLocalFile                
+                ut.removeDiscFile((FileSystemFile) dirFile);
+                iterator.remove(); 
                 return root;
             }else{
                 FileSystemDirectory tempDir = (FileSystemDirectory) dirFile;
@@ -183,21 +180,19 @@ public class Window_remove extends javax.swing.JFrame {
                     nodeList.add(dir);
                 }
                 root = ut.moveDelete(nodeList, root);
-                Iterator<FileSystemNode> it = tempDir.getNodes().iterator();               
-                while(it.hasNext()){                    
-                    FileSystemNode node = it.next();
+                iterator = tempDir.getNodes().iterator();               
+                while(iterator.hasNext()){                    
+                    FileSystemNode node = iterator.next();
                     if(!node.isDirectory()){
-                        root = deleteDirFile(node,root);                    
-                    } else {
-                        root = deleteDirFile(node,root);  
-                        it.remove();
-                    }                                                         
+                        root = deleteDir(node, root, iterator);
+                    }else{
+                        root= deleteDir(node, root, iterator);
+                        iterator.remove();
+                    }
                 }
-                root = (FileSystemDirectory) root.getParent();
-                root.getNodes().remove(dirFile); //Para directorios
             }        
         }
-        return null;
+        return root;
     }
     
     private void cbx_file_nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_file_nameActionPerformed

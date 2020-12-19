@@ -13,6 +13,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -124,6 +125,44 @@ public class Utilities {
             tree = tempTree;
         }                                         
         return tree;
+    }
+    
+    public FileSystemDirectory deleteLogicDirFile(FileSystemNode dirFile, FileSystemDirectory root, Iterator<FileSystemNode> iterator){
+        if(root.getNodes().isEmpty()){
+            return root;
+        }else{
+            if(!dirFile.isDirectory()){ //FILES                
+                iterator.remove(); 
+                return root;
+            }else{
+                FileSystemDirectory tempDir = (FileSystemDirectory) dirFile;
+                String [] route = dirFile.getPath().split("/");
+                List<String> nodeList = new ArrayList<String>();
+                for(String dir: route){
+                    nodeList.add(dir);
+                }
+                root = moveDelete(nodeList, root);
+                iterator = tempDir.getNodes().iterator();               
+                while(iterator.hasNext()){                    
+                    FileSystemNode node = iterator.next();
+                    if(!node.isDirectory()){
+                        root = deleteLogicDirFile(node, root, iterator);
+                    }else{
+                        root= deleteLogicDirFile(node, root, iterator);
+                        iterator.remove();
+                    }
+                }
+            }        
+        }
+        return root;
+    }
+    
+    public void removeDiscFile(FileSystemFile file){
+        //removeLocalFile                
+        String memory = loadDisc();
+        int lineLenght = lineLenght();
+        String result = deleteFileInMemory(memory, file.listOfInicialIndices, lineLenght);
+        WriteDisc(result);                                
     }
     
     public boolean fileExitstOnDirectory(FileSystemDirectory actual, String pathToSerch, String fileName){
