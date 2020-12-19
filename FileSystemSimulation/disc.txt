@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 _______
 dadsdas
 fdafafd
@@ -5,3 +6,6 @@ sfsfsfs
 fsfsfsf
 sfsf___
 _______
+=======
+____
+>>>>>>> BadillaDevelopment

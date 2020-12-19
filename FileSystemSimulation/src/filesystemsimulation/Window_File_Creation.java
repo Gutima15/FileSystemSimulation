@@ -152,7 +152,7 @@ public class Window_File_Creation extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(validateData()){
             String fileName = (txf_file_name.getText().concat(".")).concat(txf_file_extension.getText());
-            if(ut.fileExitstOnDirectory(root, root.getPath(), fileName )){
+            if(ut.fileExistOnDirectory(root, root.getPath(), fileName )){
                 JOptionPane.showMessageDialog(this, "There is a file with the same name in this directory", "Error",  ERROR_MESSAGE);
             } else {
                //Memory Load
