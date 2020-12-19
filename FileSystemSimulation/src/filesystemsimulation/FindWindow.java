@@ -5,6 +5,11 @@
  */
 package filesystemsimulation;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
+
 /**
  *
  * @author adria
@@ -39,11 +44,11 @@ public class FindWindow extends javax.swing.JFrame {
         lbl_name = new javax.swing.JLabel();
         txf_dirFile_name = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txf_dirFile_extention = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("List actual directory");
+        setTitle("Find");
         setResizable(false);
 
         txa_find.setEditable(false);
@@ -83,7 +88,7 @@ public class FindWindow extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txf_dirFile_extention, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel2))
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -97,13 +102,14 @@ public class FindWindow extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl_name)
-                    .addComponent(txf_dirFile_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel1)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel2)))
+                        .addComponent(txf_dirFile_extention, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lbl_name)
+                        .addComponent(txf_dirFile_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -136,15 +142,49 @@ public class FindWindow extends javax.swing.JFrame {
 
     private void btn_findActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_findActionPerformed
         String result = "";
-        root = ut.
-        for (FileSystemNode file : root.getNodes()) {
-            if(file.isDirectory()){
-                result += file.getName() + "\n"; 
-            }                
+        String dirFileName = txf_dirFile_name.getText();
+        String dirFileExt = txf_dirFile_extention.getText();
+        FileSystemDirectory tempDir = root;
+        tempDir = ut.moveUp(root); //subir con tempDir
+        if(dirFileExt.equals("")){
+            result = getAllDirRoutes(dirFileName, (FileSystemDirectory)tempDir, result);
+        } else {
+            result = getAllFileRoutes(dirFileName+"."+dirFileExt, tempDir, result);
         }
         txa_find.setText(result);
     }//GEN-LAST:event_btn_findActionPerformed
 
+    private String getAllDirRoutes(String dirName, FileSystemDirectory root, String result){
+        if(!root.isDirectory()){
+            return result;
+        } else {
+            for(FileSystemNode n: root.getNodes()){
+                if(n.isDirectory()){
+                    if(n.getName().equals(dirName)){
+                        result += n.getPath() + "/\n"; 
+                    }
+                    result = getAllDirRoutes(dirName, (FileSystemDirectory)n, result);
+                }
+            }
+        }
+        return result;
+    }
+    
+    private String getAllFileRoutes(String fileName, FileSystemNode root, String result){
+        if(!root.isDirectory()){
+            if(root.getName().equals(fileName)){
+                result += root.getPath() + "\n"; 
+            }
+            return result;
+        } else {
+            FileSystemDirectory tempRoot = (FileSystemDirectory) root;
+            for(FileSystemNode n: tempRoot.getNodes()){
+                result = getAllFileRoutes(fileName, n, result);
+            }
+        }
+        return result;
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_back;
@@ -153,9 +193,9 @@ public class FindWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lbl_name;
     private javax.swing.JTextArea txa_find;
+    private javax.swing.JTextField txf_dirFile_extention;
     private javax.swing.JTextField txf_dirFile_name;
     // End of variables declaration//GEN-END:variables
 }
