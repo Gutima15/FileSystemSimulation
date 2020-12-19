@@ -340,7 +340,8 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_NewDirectoryButtonActionPerformed
 
     private void FindButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FindButtonActionPerformed
-        // TODO add your handling code here:
+        FindWindow findWindow = new FindWindow(tree, this);        
+        findWindow.setVisible(true);
     }//GEN-LAST:event_FindButtonActionPerformed
 
     private void ListDirectoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListDirectoryButtonActionPerformed
