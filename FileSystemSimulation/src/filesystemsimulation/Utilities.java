@@ -90,7 +90,7 @@ public class Utilities {
         return actual;
     }
     
-    public boolean fileExitstOnDirectory(FileSystemDirectory actual, String pathToSerch, String fileName){
+    public boolean fileExistOnDirectory(FileSystemDirectory actual, String pathToSerch, String fileName){
         boolean result = false;
         String[] route = pathToSerch.split("/");
         List<String> list;  
