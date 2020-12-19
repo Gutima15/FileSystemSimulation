@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -88,6 +90,40 @@ public class Utilities {
             }
         }
         return actual;
+    }
+    public FileSystemDirectory move(List<String> routeL, FileSystemDirectory tree, JFrame ventana){
+        List<String> routeList = new ArrayList<String>(routeL);        
+        if(routeList.get(0).equals("root") && routeList.size()==1 && tree.getName().equals("root")){
+            JOptionPane.showMessageDialog(ventana, "You're already in " + tree.getPath());
+        }else{
+            FileSystemDirectory tempTree = tree;
+            tree = moveUp(tree); //Voy a root
+            if(routeList.get(0).equals("root") && routeList.size()==1){
+                JOptionPane.showMessageDialog(ventana, "Success in moving to " + tree.getPath());
+            }else{      
+                routeL.remove(0);
+                tree = moveDown(routeL,tree);
+                if(tree == null){
+                    tree = tempTree;
+                    JOptionPane.showMessageDialog(ventana, "Route not found");
+                }else{
+                    JOptionPane.showMessageDialog(ventana, "Success in moving to " + tree.getPath());                                                                  
+                }                
+            }            
+        }
+        return tree;
+    }
+    
+    public FileSystemDirectory moveDelete(List<String> routeL, FileSystemDirectory tree){
+        List<String> routeList = new ArrayList<String>(routeL);        
+        FileSystemDirectory tempTree = tree;
+        tree = moveUp(tree); //Voy a root
+        routeL.remove(0);
+        tree = moveDown(routeL,tree);
+        if(tree == null){
+            tree = tempTree;
+        }                                         
+        return tree;
     }
     
     public boolean fileExitstOnDirectory(FileSystemDirectory actual, String pathToSerch, String fileName){

@@ -28,6 +28,10 @@ public class FileSystemDirectory extends FileSystemNode {
         nodes.add(node);
     }
 
+    public void removeFile(String fileName){
+        
+    }
+    
     public Set<FileSystemNode> getNodes() {
         return nodes;
     }
@@ -69,4 +73,6 @@ public class FileSystemDirectory extends FileSystemNode {
         }
         return sb.toString();
     }
+    
+    
 }
