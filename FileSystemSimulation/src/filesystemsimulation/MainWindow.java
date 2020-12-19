@@ -187,6 +187,11 @@ public class MainWindow extends javax.swing.JFrame {
         });
 
         RemoveButton.setText("Remove");
+        RemoveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RemoveButtonActionPerformed(evt);
+            }
+        });
 
         CloseButton.setText("Close");
         CloseButton.addActionListener(new java.awt.event.ActionListener() {
@@ -350,33 +355,17 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_ListDirectoryButtonActionPerformed
 //MOVE BUTTON LOGIC
     private void MoveRouteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MoveRouteButtonActionPerformed
-        String newRoute = RouteTextField.getText();      
-        String[] route = newRoute.split("/");
-        if(route[0].equals("root") && route.length==1 && tree.getName().equals("root")){
-            JOptionPane.showMessageDialog(null, "You're already in " + tree.getPath());
-        }else{
-            List<String> list;  
-            list = new ArrayList<String>();
-            for(int i = 0; i< route.length; i++){
-                list.add(route[i]);
-            }
-            FileSystemDirectory tempTree = tree;
-            tree = ut.moveUp(tree); //Voy a root
-            if(route[0].equals("root") && route.length==1){
-                JOptionPane.showMessageDialog(null, "Success in moving to " + tree.getPath());
-            }else{      
-                list.remove(0);
-                tree = ut.moveDown(list,tree);
-                if(tree == null){
-                    tree = tempTree;
-                    JOptionPane.showMessageDialog(null, "Route not found");
-                }else{
-                    JOptionPane.showMessageDialog(null, "Success in moving to " + tree.getPath());                                                                  
-                }                
-            }
-            RouteTextField.setText(tree.getPath());
-            fillTree(tree);
-        }             
+  
+          String newRoute = RouteTextField.getText();      
+          String[] route = newRoute.split("/");
+          List<String> routeList =new ArrayList<String>();
+          for(int i = 0; i< route.length; i++){
+              routeList.add(route[i]);
+          }
+          tree = ut.move(routeList, tree, this);
+          RouteTextField.setText(tree.getPath());
+          fillTree(tree);
+          
     }//GEN-LAST:event_MoveRouteButtonActionPerformed
 
     private void CloseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseButtonActionPerformed
@@ -473,6 +462,17 @@ public class MainWindow extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_CopyButtonActionPerformed
+
+    private void RemoveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RemoveButtonActionPerformed
+        List<FileSystemNode> dirFiles = new ArrayList<FileSystemNode>(tree.getNodes());
+        if(dirFiles.size() == 0){
+            JOptionPane.showMessageDialog(this, "This folder does not contain any file or directory", "Empty folder", INFORMATION_MESSAGE );
+        } else {
+            Window_remove removeWindow = new Window_remove(tree,this, dirFiles );
+            this.dispose();
+            removeWindow.setVisible(true);
+        }
+    }//GEN-LAST:event_RemoveButtonActionPerformed
                  
     /**
      * @param args the command line arguments
