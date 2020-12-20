@@ -36,7 +36,9 @@ public class FileSystemSimulation {
         
         movie.add(englishMovie);        
         root = englishMovie;
-        movie.add(englishMovie);        
+        movie.add(englishMovie);
+        System.out.println(despicableMe.getPath());
+        System.out.println(movie.getPath());
         FileSystemDirectory banglaMovie = new FileSystemDirectory("Bangla");
         banglaMovie.add(new FileSystemFile("The Clay Bird.mp4"));
         banglaMovie.add(new FileSystemFile("Jibon Thekey Neya.mp4"));
