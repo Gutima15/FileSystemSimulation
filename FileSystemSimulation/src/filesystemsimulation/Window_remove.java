@@ -6,6 +6,7 @@
 package filesystemsimulation;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -154,6 +155,7 @@ public class Window_remove extends javax.swing.JFrame {
         Iterator<FileSystemNode> it= null;
         if(dirFile.isDirectory()){
             root = deleteDir(dirFile,root,it);
+            root.getNodes().remove(dirFile);
         }else{            
             ut.removeDiscFile((FileSystemFile) dirFile);
             root.getNodes().remove(dirFile);
@@ -164,33 +166,28 @@ public class Window_remove extends javax.swing.JFrame {
     }//GEN-LAST:event_removeButtonActionPerformed
     
     public FileSystemDirectory deleteDir(FileSystemNode dirFile, FileSystemDirectory root, Iterator<FileSystemNode> iterator){
-        if(root.getNodes().isEmpty()){
+        
+        if(!dirFile.isDirectory()){ //FILES
+            //removeLocalFile                
+            ut.removeDiscFile((FileSystemFile) dirFile);
+            iterator.remove(); 
             return root;
         }else{
-            if(!dirFile.isDirectory()){ //FILES
-                //removeLocalFile                
-                ut.removeDiscFile((FileSystemFile) dirFile);
-                iterator.remove(); 
-                return root;
-            }else{
-                FileSystemDirectory tempDir = (FileSystemDirectory) dirFile;
-                String [] route = dirFile.getPath().split("/");
-                List<String> nodeList = new ArrayList<String>();
-                for(String dir: route){
-                    nodeList.add(dir);
+            FileSystemDirectory tempDir = (FileSystemDirectory) dirFile;
+            String [] route = dirFile.getPath().split("/");
+            List<String> nodeList = new ArrayList<>();
+            nodeList.addAll(Arrays.asList(route));
+            //root = ut.moveDelete(nodeList, root);
+            iterator = tempDir.getNodes().iterator();               
+            while(iterator.hasNext()){                    
+                FileSystemNode node = iterator.next();
+                if(!node.isDirectory()){
+                    root = deleteDir(node, root, iterator);
+                }else{
+                    root= deleteDir(node, root, iterator);
+                    iterator.remove();
                 }
-                root = ut.moveDelete(nodeList, root);
-                iterator = tempDir.getNodes().iterator();               
-                while(iterator.hasNext()){                    
-                    FileSystemNode node = iterator.next();
-                    if(!node.isDirectory()){
-                        root = deleteDir(node, root, iterator);
-                    }else{
-                        root= deleteDir(node, root, iterator);
-                        iterator.remove();
-                    }
-                }
-            }        
+            }
         }
         return root;
     }
