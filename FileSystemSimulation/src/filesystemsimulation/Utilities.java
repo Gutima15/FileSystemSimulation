@@ -13,6 +13,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
@@ -115,8 +116,7 @@ public class Utilities {
         return tree;
     }
     
-    public FileSystemDirectory moveDelete(List<String> routeL, FileSystemDirectory tree){
-        List<String> routeList = new ArrayList<String>(routeL);        
+    public FileSystemDirectory moveDelete(List<String> routeL, FileSystemDirectory tree){    
         FileSystemDirectory tempTree = tree;
         tree = moveUp(tree); //Voy a root
         routeL.remove(0);
@@ -137,10 +137,8 @@ public class Utilities {
             }else{
                 FileSystemDirectory tempDir = (FileSystemDirectory) dirFile;
                 String [] route = dirFile.getPath().split("/");
-                List<String> nodeList = new ArrayList<String>();
-                for(String dir: route){
-                    nodeList.add(dir);
-                }
+                List<String> nodeList = new ArrayList<>();
+                nodeList.addAll(Arrays.asList(route)); //sustituye el for por el addAll
                 root = moveDelete(nodeList, root);
                 iterator = tempDir.getNodes().iterator();               
                 while(iterator.hasNext()){                    
