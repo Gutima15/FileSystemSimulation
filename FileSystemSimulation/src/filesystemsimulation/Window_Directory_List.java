@@ -6,8 +6,7 @@
 package filesystemsimulation;
 
 /**
- *
- * @author adria
+ * @author Jorge & Badilla
  */
 public class Window_Directory_List extends javax.swing.JFrame {
     FileSystemDirectory root;

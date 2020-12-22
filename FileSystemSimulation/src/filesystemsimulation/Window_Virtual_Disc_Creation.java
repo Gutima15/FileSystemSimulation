@@ -15,8 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author adria
+ * @author Jorge & Badilla 
  */
 public class Window_Virtual_Disc_Creation extends javax.swing.JFrame {
     Utilities ut = new Utilities();

@@ -22,8 +22,7 @@ import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
 
 /**
- *
- * @author adria
+ * @author Jorge & Badilla 
  */
 public class Window_copy extends javax.swing.JFrame {
     FileSystemDirectory root;

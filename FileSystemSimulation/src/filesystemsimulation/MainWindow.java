@@ -178,6 +178,11 @@ public class MainWindow extends javax.swing.JFrame {
         LeftSaparator.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
         MoveBothButton.setText("Move");
+        MoveBothButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MoveBothButtonActionPerformed(evt);
+            }
+        });
 
         FindButton.setText("Find");
         FindButton.addActionListener(new java.awt.event.ActionListener() {
@@ -473,6 +478,17 @@ public class MainWindow extends javax.swing.JFrame {
             removeWindow.setVisible(true);
         }
     }//GEN-LAST:event_RemoveButtonActionPerformed
+
+    private void MoveBothButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MoveBothButtonActionPerformed
+        JOptionPane.showMessageDialog(this, "This button is not working.", "On developemt", INFORMATION_MESSAGE );
+//        List<FileSystemNode> dirFiles = new ArrayList<FileSystemNode>(tree.getNodes());
+//        if(dirFiles.size() == 0){
+//            JOptionPane.showMessageDialog(this, "This folder does not contain any file or directory", "Empty folder", INFORMATION_MESSAGE );
+//        } else {
+//            MoveWindow windowMove = new MoveWindow(tree,this, dirFiles);
+//            windowMove.setVisible(true);
+//        }
+    }//GEN-LAST:event_MoveBothButtonActionPerformed
                  
     /**
      * @param args the command line arguments

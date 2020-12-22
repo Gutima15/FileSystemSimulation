@@ -8,8 +8,7 @@ package filesystemsimulation;
 import java.util.List;
 
 /**
- *
- * @author adria
+ * @author Badilla & Jorge 
  */
 public class Window_File_Properties extends javax.swing.JFrame {
     FileSystemDirectory root;

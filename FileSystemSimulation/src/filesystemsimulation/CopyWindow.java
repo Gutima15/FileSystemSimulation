@@ -7,8 +7,7 @@ package filesystemsimulation;
  */
 
 /**
- *
- * @author jorge
+ * @author Jorge & Badilla
  */
 public class CopyWindow extends javax.swing.JFrame {
 

@@ -14,8 +14,7 @@ import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
 
 /**
- *
- * @author adria
+ * @author Jorge & Badilla
  */
 public class Window_remove extends javax.swing.JFrame {
     FileSystemDirectory root;
@@ -160,6 +159,7 @@ public class Window_remove extends javax.swing.JFrame {
             ut.removeDiscFile((FileSystemFile) dirFile);
             root.getNodes().remove(dirFile);
         }                
+        JOptionPane.showMessageDialog(this, "The file or directory was removed correctly", "Remove", INFORMATION_MESSAGE );
         parent.fillTree(root);
         this.dispose();
         parent.setVisible(true);

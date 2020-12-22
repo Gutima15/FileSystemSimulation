@@ -1,5 +1,10 @@
 package filesystemsimulation;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -7,16 +12,34 @@ package filesystemsimulation;
  */
 
 /**
- *
- * @author jorge
+ * @author Jorge & Badilla 
  */
 public class MoveWindow extends javax.swing.JFrame {
-
+    FileSystemDirectory root;
+    MainWindow parent;    
+    List<FileSystemNode> dirFiles;
+    Utilities ut = new Utilities();
     /**
      * Creates new form MoveWindow
      */
-    public MoveWindow() {
+    public MoveWindow(FileSystemDirectory rootName, MainWindow parent, List<FileSystemNode> dirFiles) {
         initComponents();
+        root = rootName;        
+        this.parent = parent;
+        this.dirFiles = dirFiles;        
+        setNodeNames(dirFiles);
+    }
+    public void setNodeNames(List<FileSystemNode> dirFiles){
+        String result = "";       
+        for(FileSystemNode f: dirFiles){
+            if(f.isDirectory()){
+                result += f.getName() + "/\n"; 
+            }else{
+                result += f.getName() + "\n"; 
+            }
+            NamejComboBox.addItem(result);
+            result = "";
+        }
     }
 
     /**
@@ -29,21 +52,23 @@ public class MoveWindow extends javax.swing.JFrame {
     private void initComponents() {
 
         MovingLabel = new javax.swing.JLabel();
-        NameTextField = new javax.swing.JTextField();
         ToLabel = new javax.swing.JLabel();
         ToTextField = new javax.swing.JTextField();
         RenameButton = new javax.swing.JButton();
         AcceptButton = new javax.swing.JButton();
         CancelButton = new javax.swing.JButton();
+        NamejComboBox = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Move file or directory");
+        setResizable(false);
 
         MovingLabel.setText("Moving:");
 
         ToLabel.setText("To:");
 
         RenameButton.setText("Rename");
+        RenameButton.setEnabled(false);
         RenameButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 RenameButtonActionPerformed(evt);
@@ -81,8 +106,8 @@ public class MoveWindow extends javax.swing.JFrame {
                         .addComponent(ToTextField))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(MovingLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(NameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(NamejComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(RenameButton)))
                 .addContainerGap(19, Short.MAX_VALUE))
@@ -93,74 +118,72 @@ public class MoveWindow extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(MovingLabel)
-                    .addComponent(NameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(RenameButton))
+                    .addComponent(RenameButton)
+                    .addComponent(NamejComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ToLabel)
                     .addComponent(ToTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(AcceptButton)
-                    .addComponent(CancelButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(CancelButton)
+                    .addComponent(AcceptButton))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void RenameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RenameButtonActionPerformed
-        // TODO add your handling code here:
+        int fileNameIndex = NamejComboBox.getSelectedIndex();
+        //buscar el archivo en files
+        FileSystemNode dirFile = dirFiles.get(fileNameIndex);
+        RenameWindow windowRename = new RenameWindow(dirFile);
+        windowRename.setVisible(true);
     }//GEN-LAST:event_RenameButtonActionPerformed
 
     private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_CancelButtonActionPerformed
 
     private void AcceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AcceptButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_AcceptButtonActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MoveWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MoveWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MoveWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MoveWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        String newPath = ToTextField.getText();
+        int fileNameIndex = NamejComboBox.getSelectedIndex();
+        //buscar el archivo en files
+        FileSystemNode dirFile = dirFiles.get(fileNameIndex);
+        //process both paths
+        String [] newPathSplit = newPath.split("/");
+        String [] actualPathSplit = dirFile.getPath().split("/");
+        List<String> newPathList= new ArrayList<String>();
+        List<String> actualPathList = new ArrayList<String>();
+        for(String node: newPathSplit){
+            newPathList.add(node);
+        }        
+        for(String node: actualPathSplit){
+            actualPathList.add(node);
         }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MoveWindow().setVisible(true);
-            }
-        });
-    }
+        actualPathList.remove(actualPathList.size()-1); //removing it's own file or dir name
+        
+        if (newPathList.equals(actualPathList)){ //
+            int dialogButton = JOptionPane.YES_NO_OPTION;
+            dialogButton = JOptionPane.showConfirmDialog (this, "You are moving to the same directory. Do you want to rename?","INFORMATION", dialogButton);
+            if (dialogButton == JOptionPane.YES_OPTION) {
+                RenameButton.setEnabled(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "Please enter a path different to the origin of the file or directory", "Moving", INFORMATION_MESSAGE );
+            }                   
+        } /*else {
+            
+        }*/
+        //this.dispose();
+    }//GEN-LAST:event_AcceptButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AcceptButton;
     private javax.swing.JButton CancelButton;
     private javax.swing.JLabel MovingLabel;
-    private javax.swing.JTextField NameTextField;
+    private javax.swing.JComboBox<String> NamejComboBox;
     private javax.swing.JButton RenameButton;
     private javax.swing.JLabel ToLabel;
     private javax.swing.JTextField ToTextField;

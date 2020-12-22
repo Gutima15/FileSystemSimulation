@@ -9,8 +9,7 @@ import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
 
 /**
- *
- * @author adria
+ * @author Jorge & Badilla
  */
 public class Window_Directory_Creation extends javax.swing.JFrame {
     FileSystemDirectory root;

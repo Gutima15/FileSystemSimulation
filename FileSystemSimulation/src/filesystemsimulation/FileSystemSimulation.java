@@ -19,6 +19,7 @@ public class FileSystemSimulation {
     public static void main(String[] args) {
         FileSystemDirectory root;
         root = new FileSystemDirectory("root");
+        System.out.println("Este es el path de root: " + root.getPath().split(".")[0]);
         FileSystemFile file = new FileSystemFile("profile.jpg");
         root.add(file);
 

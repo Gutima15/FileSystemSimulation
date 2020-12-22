@@ -30,6 +30,9 @@ public abstract class FileSystemNode implements Comparable<FileSystemNode> {
         this.lastAccessed = LocalDateTime.now();                
     }
     
+    public void setNodeName (String name){
+    this.name = name;
+}
     public void setListOfIndices(List<Integer> indices){
         listOfInicialIndices = indices;
     }
