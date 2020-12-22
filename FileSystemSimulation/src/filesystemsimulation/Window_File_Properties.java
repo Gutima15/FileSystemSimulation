@@ -52,7 +52,7 @@ public class Window_File_Properties extends javax.swing.JFrame {
         btn_back = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Look file");
+        setTitle("Look file properties");
         setResizable(false);
 
         lbl_file_name.setText("File: ");

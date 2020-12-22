@@ -64,7 +64,7 @@ public class Window_remove extends javax.swing.JFrame {
         jButton1.setText("jButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Download file");
+        setTitle("Remove file");
         setResizable(false);
 
         lbl_file_name.setText("File: ");

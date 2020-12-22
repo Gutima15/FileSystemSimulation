@@ -57,7 +57,7 @@ public class Window_File_Editor extends javax.swing.JFrame {
         jComboBoxFile = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Look file");
+        setTitle("Edit file");
         setResizable(false);
 
         lbl_file_name.setText("File: ");

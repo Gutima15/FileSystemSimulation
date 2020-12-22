@@ -52,8 +52,10 @@ public class Window_Virtual_Disc_Creation extends javax.swing.JFrame {
         lbl_sector_size.setText("Sector size:");
 
         spn_sec_size.setModel(new javax.swing.SpinnerNumberModel(4, 4, 1024, 1));
+        spn_sec_size.setValue(19);
 
         spn_sec_cant.setModel(new javax.swing.SpinnerNumberModel(1, 1, 1000, 1));
+        spn_sec_cant.setValue(10);
 
         btn_create_disc.setText("Create virtual disc");
         btn_create_disc.addActionListener(new java.awt.event.ActionListener() {

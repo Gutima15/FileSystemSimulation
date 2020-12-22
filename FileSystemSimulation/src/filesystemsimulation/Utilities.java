@@ -21,6 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.ERROR_MESSAGE;
 
 /**
  *
@@ -96,20 +97,20 @@ public class Utilities {
     public FileSystemDirectory move(List<String> routeL, FileSystemDirectory tree, JFrame ventana){
         List<String> routeList = new ArrayList<String>(routeL);        
         if(routeList.get(0).equals("root") && routeList.size()==1 && tree.getName().equals("root")){
-            JOptionPane.showMessageDialog(ventana, "You're already in " + tree.getPath());
+            JOptionPane.showMessageDialog(ventana, "You're already in " + tree.getPath(), "Cannot move",  JOptionPane.INFORMATION_MESSAGE);
         }else{
             FileSystemDirectory tempTree = tree;
             tree = moveUp(tree); //Voy a root
             if(routeList.get(0).equals("root") && routeList.size()==1){
-                JOptionPane.showMessageDialog(ventana, "Success in moving to " + tree.getPath());
+                JOptionPane.showMessageDialog(ventana, "Success in moving to " + tree.getPath(), "Moved",  JOptionPane.INFORMATION_MESSAGE);
             }else{      
                 routeL.remove(0);
                 tree = moveDown(routeL,tree);
                 if(tree == null){
                     tree = tempTree;
-                    JOptionPane.showMessageDialog(ventana, "Route not found");
+                    JOptionPane.showMessageDialog(ventana, "Route not found", "Error", ERROR_MESSAGE);
                 }else{
-                    JOptionPane.showMessageDialog(ventana, "Success in moving to " + tree.getPath());                                                                  
+                    JOptionPane.showMessageDialog(ventana, "Success in moving to " + tree.getPath(), "Moved",  JOptionPane.INFORMATION_MESSAGE);                                                                 
                 }                
             }            
         }
@@ -190,20 +191,12 @@ public class Utilities {
         return result;
     }
      
-    public boolean directoryExist(FileSystemDirectory actual, String pathToSerch){
+    public boolean directoryExist(FileSystemDirectory actual, String nameToSerch){
         boolean result = false;
-        String[] route = pathToSerch.split("/");
-        List<String> list;  
-        list = new ArrayList<String>();
-        for(int i = 0; i< route.length; i++){
-            list.add(route[i]);
-        }
-        FileSystemDirectory tempTree = actual;
-        tempTree = moveUp(actual); //Voy a root
-        list.remove(0);
-        tempTree = moveDown(list,tempTree);
-        if(tempTree!=null){ //NO ESTA EL DIR
-            result = true;  
+        for(FileSystemNode n: actual.getNodes()){
+            if(n.isDirectory() && n.getName().equals(nameToSerch)){
+                result = true;
+            }
         }
         return result;
     }

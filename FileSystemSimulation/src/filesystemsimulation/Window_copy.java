@@ -67,7 +67,7 @@ public class Window_copy extends javax.swing.JFrame {
         jButton1.setText("jButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Download file");
+        setTitle("Copy file");
         setResizable(false);
 
         lbl_file_name.setText("Copy file:");
@@ -79,7 +79,6 @@ public class Window_copy extends javax.swing.JFrame {
         });
 
         copyButton.setText("Copy");
-        copyButton.setActionCommand("Copy");
         copyButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 copyButtonActionPerformed(evt);
@@ -200,7 +199,7 @@ public class Window_copy extends javax.swing.JFrame {
             root = ut.moveDown(list,root);
             if(root == null){
                 root = tempTree;
-                JOptionPane.showMessageDialog(null, "Route not found");
+                JOptionPane.showMessageDialog(null, "Route not found", "Error",  ERROR_MESSAGE);
             }else{                
                 double lineasNecesarias = Math.ceil((float)content.length()/(float)(lineLenght-1));
                 List<Integer> emptyIndices = ut.getValidEmptyIndexed(memory,(int)lineasNecesarias, lineLenght);

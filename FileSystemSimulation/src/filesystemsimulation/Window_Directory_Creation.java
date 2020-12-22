@@ -5,6 +5,9 @@
  */
 package filesystemsimulation;
 
+import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
+
 /**
  *
  * @author adria
@@ -12,6 +15,7 @@ package filesystemsimulation;
 public class Window_Directory_Creation extends javax.swing.JFrame {
     FileSystemDirectory root;
     MainWindow parent;
+    Utilities ut;
     /**
      * Creates new form Window_Directory_Creation
      */
@@ -19,6 +23,7 @@ public class Window_Directory_Creation extends javax.swing.JFrame {
         initComponents();
         root = rootName;        
         this.parent = parent;
+        ut = new Utilities();
     }
 
     /**
@@ -112,11 +117,15 @@ public class Window_Directory_Creation extends javax.swing.JFrame {
     private void btn_create_directoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_create_directoryActionPerformed
         String dirName = txf_directory_name.getText();
         FileSystemDirectory dir = new FileSystemDirectory(dirName);
-        root.add(dir);        
-        parent.setVisible(true);
-        parent.fillTree(root);
-        parent.RouteTextField.setText(root.getPath());
-        this.dispose();
+        if(ut.directoryExist(root, dirName)){
+            JOptionPane.showMessageDialog(this, "This directory already exists", "Cannot create directory", JOptionPane.ERROR_MESSAGE );
+        } else {
+            root.add(dir);        
+            parent.setVisible(true);
+            parent.fillTree(root);
+            parent.RouteTextField.setText(root.getPath());
+            this.dispose();
+        }
     }//GEN-LAST:event_btn_create_directoryActionPerformed
 
     private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
