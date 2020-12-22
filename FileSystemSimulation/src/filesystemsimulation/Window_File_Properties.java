@@ -60,6 +60,7 @@ public class Window_File_Properties extends javax.swing.JFrame {
 
         txa_file_properties.setColumns(20);
         txa_file_properties.setRows(5);
+        txa_file_properties.setFocusable(false);
         jScrollPane1.setViewportView(txa_file_properties);
 
         btn_view_file_porperties.setText("Look file properties");

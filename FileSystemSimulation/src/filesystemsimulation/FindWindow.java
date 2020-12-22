@@ -63,6 +63,11 @@ public class FindWindow extends javax.swing.JFrame {
         });
 
         btn_back.setText("Back");
+        btn_back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_backActionPerformed(evt);
+            }
+        });
 
         lbl_name.setText("Name:");
 
@@ -152,6 +157,10 @@ public class FindWindow extends javax.swing.JFrame {
         }
         txa_find.setText(result);
     }//GEN-LAST:event_btn_findActionPerformed
+
+    private void btn_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_backActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btn_backActionPerformed
 
     private String getAllDirRoutes(String dirName, FileSystemDirectory root, String result){
         if(!root.isDirectory()){
